@@ -28,7 +28,7 @@ const navItems = [
   { icon: Lightbulb, label: "Recommendations", href: "/recommendations" },
   { icon: Activity, label: "Activity Log", href: "#" },
   { icon: FileBarChart, label: "Reports", href: "#" },
-  { icon: Settings, label: "Settings", href: "#" },
+  // { icon: Settings, label: "Settings", href: "#" },
 ]
 
 export function Sidebar({ isOpen }: SidebarProps) {
