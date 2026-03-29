@@ -1,0 +1,1872 @@
+{
+  "users": [
+    {
+      "user_id": "U1",
+      "department": "Engineering"
+    },
+    {
+      "user_id": "U2",
+      "department": "Engineering"
+    },
+    {
+      "user_id": "U3",
+      "department": "Finance"
+    },
+    {
+      "user_id": "U4",
+      "department": "HR"
+    },
+    {
+      "user_id": "U5",
+      "department": "Engineering"
+    },
+    {
+      "user_id": "U6",
+      "department": "Engineering"
+    },
+    {
+      "user_id": "U7",
+      "department": "Finance"
+    },
+    {
+      "user_id": "U8",
+      "department": "HR"
+    },
+    {
+      "user_id": "U9",
+      "department": "Engineering"
+    },
+    {
+      "user_id": "U10",
+      "department": "Finance"
+    }
+  ],
+  "permissions": [
+    {
+      "permission_id": "read_code",
+      "sensitivity_level": "low"
+    },
+    {
+      "permission_id": "write_code",
+      "sensitivity_level": "medium"
+    },
+    {
+      "permission_id": "deploy_service",
+      "sensitivity_level": "high"
+    },
+    {
+      "permission_id": "view_salary",
+      "sensitivity_level": "high"
+    },
+    {
+      "permission_id": "edit_employee",
+      "sensitivity_level": "medium"
+    },
+    {
+      "permission_id": "admin_access",
+      "sensitivity_level": "critical"
+    }
+  ],
+  "access_logs": [
+    {
+      "user_id": "U7",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-01",
+      "frequency": 38
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-02",
+      "frequency": 48
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-03",
+      "frequency": 69
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-04",
+      "frequency": 64
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-05",
+      "frequency": 48
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-06",
+      "frequency": 23
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-07",
+      "frequency": 35
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-08",
+      "frequency": 61
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-09",
+      "frequency": 29
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-10",
+      "frequency": 62
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-11",
+      "frequency": 68
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-12",
+      "frequency": 56
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-13",
+      "frequency": 37
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-14",
+      "frequency": 35
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-15",
+      "frequency": 3
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-16",
+      "frequency": 63
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-17",
+      "frequency": 60
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-18",
+      "frequency": 67
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-19",
+      "frequency": 27
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-20",
+      "frequency": 32
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-21",
+      "frequency": 29
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-22",
+      "frequency": 20
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-23",
+      "frequency": 55
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-24",
+      "frequency": 29
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-25",
+      "frequency": 54
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-26",
+      "frequency": 77
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-27",
+      "frequency": 41
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-28",
+      "frequency": 3
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-01",
+      "frequency": 78
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-02",
+      "frequency": 16
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-03",
+      "frequency": 52
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-04",
+      "frequency": 51
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-05",
+      "frequency": 48
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-06",
+      "frequency": 28
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-07",
+      "frequency": 33
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-08",
+      "frequency": 6
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-09",
+      "frequency": 78
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-10",
+      "frequency": 46
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-11",
+      "frequency": 3
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-12",
+      "frequency": 12
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-13",
+      "frequency": 21
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-14",
+      "frequency": 23
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-15",
+      "frequency": 26
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-16",
+      "frequency": 55
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-17",
+      "frequency": 73
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-18",
+      "frequency": 29
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-19",
+      "frequency": 73
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-20",
+      "frequency": 52
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-21",
+      "frequency": 33
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-22",
+      "frequency": 19
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-23",
+      "frequency": 52
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-24",
+      "frequency": 63
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-25",
+      "frequency": 77
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-26",
+      "frequency": 5
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-27",
+      "frequency": 11
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-28",
+      "frequency": 75
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-01",
+      "frequency": 79
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-02",
+      "frequency": 3
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-03",
+      "frequency": 28
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-04",
+      "frequency": 26
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-05",
+      "frequency": 73
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-06",
+      "frequency": 2
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-07",
+      "frequency": 48
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-08",
+      "frequency": 52
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-09",
+      "frequency": 31
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-10",
+      "frequency": 2
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-11",
+      "frequency": 75
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-12",
+      "frequency": 18
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-13",
+      "frequency": 23
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-14",
+      "frequency": 48
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-15",
+      "frequency": 39
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-16",
+      "frequency": 36
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-17",
+      "frequency": 15
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-18",
+      "frequency": 68
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-19",
+      "frequency": 48
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-20",
+      "frequency": 27
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-21",
+      "frequency": 76
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-22",
+      "frequency": 33
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-23",
+      "frequency": 63
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-24",
+      "frequency": 52
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-25",
+      "frequency": 47
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-26",
+      "frequency": 16
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-27",
+      "frequency": 33
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-28",
+      "frequency": 62
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-01",
+      "frequency": 27
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-02",
+      "frequency": 57
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-03",
+      "frequency": 53
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-04",
+      "frequency": 67
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-05",
+      "frequency": 39
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-06",
+      "frequency": 73
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-07",
+      "frequency": 19
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-08",
+      "frequency": 69
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-09",
+      "frequency": 56
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-10",
+      "frequency": 65
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-11",
+      "frequency": 54
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-12",
+      "frequency": 55
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-13",
+      "frequency": 36
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-14",
+      "frequency": 10
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-15",
+      "frequency": 69
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-16",
+      "frequency": 42
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-17",
+      "frequency": 17
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-18",
+      "frequency": 14
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-19",
+      "frequency": 37
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-20",
+      "frequency": 2
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-21",
+      "frequency": 6
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-22",
+      "frequency": 25
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-23",
+      "frequency": 68
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-24",
+      "frequency": 63
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-25",
+      "frequency": 7
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-26",
+      "frequency": 37
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-27",
+      "frequency": 22
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-28",
+      "frequency": 32
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-01",
+      "frequency": 63
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-02",
+      "frequency": 13
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-03",
+      "frequency": 2
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-04",
+      "frequency": 5
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-05",
+      "frequency": 79
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-06",
+      "frequency": 14
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-07",
+      "frequency": 22
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-08",
+      "frequency": 20
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-09",
+      "frequency": 44
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-10",
+      "frequency": 9
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-11",
+      "frequency": 50
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-12",
+      "frequency": 57
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-13",
+      "frequency": 38
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-14",
+      "frequency": 17
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-15",
+      "frequency": 68
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-16",
+      "frequency": 19
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-17",
+      "frequency": 41
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-18",
+      "frequency": 59
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-19",
+      "frequency": 19
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-20",
+      "frequency": 71
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-21",
+      "frequency": 72
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-22",
+      "frequency": 4
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-23",
+      "frequency": 9
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-24",
+      "frequency": 39
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-25",
+      "frequency": 24
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-26",
+      "frequency": 62
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-27",
+      "frequency": 8
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-28",
+      "frequency": 1
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-01",
+      "frequency": 20
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-02",
+      "frequency": 64
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-03",
+      "frequency": 42
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-04",
+      "frequency": 48
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-05",
+      "frequency": 7
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-06",
+      "frequency": 68
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-07",
+      "frequency": 4
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-08",
+      "frequency": 14
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-09",
+      "frequency": 62
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-10",
+      "frequency": 3
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-11",
+      "frequency": 64
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-12",
+      "frequency": 62
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-13",
+      "frequency": 10
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-14",
+      "frequency": 41
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-15",
+      "frequency": 75
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-16",
+      "frequency": 34
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-17",
+      "frequency": 47
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-18",
+      "frequency": 35
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-19",
+      "frequency": 20
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-20",
+      "frequency": 28
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-21",
+      "frequency": 62
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-22",
+      "frequency": 36
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-23",
+      "frequency": 48
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-24",
+      "frequency": 18
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-25",
+      "frequency": 24
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-26",
+      "frequency": 40
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-27",
+      "frequency": 14
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-28",
+      "frequency": 14
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-01",
+      "frequency": 49
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-02",
+      "frequency": 50
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-03",
+      "frequency": 74
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-04",
+      "frequency": 21
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-05",
+      "frequency": 68
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-06",
+      "frequency": 32
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-07",
+      "frequency": 14
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-08",
+      "frequency": 41
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-09",
+      "frequency": 9
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-10",
+      "frequency": 11
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-11",
+      "frequency": 27
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-12",
+      "frequency": 20
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-13",
+      "frequency": 57
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-14",
+      "frequency": 54
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-15",
+      "frequency": 66
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-16",
+      "frequency": 79
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-17",
+      "frequency": 33
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-18",
+      "frequency": 80
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-19",
+      "frequency": 64
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-20",
+      "frequency": 38
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-21",
+      "frequency": 28
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-22",
+      "frequency": 37
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-23",
+      "frequency": 22
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-24",
+      "frequency": 45
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-25",
+      "frequency": 24
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-26",
+      "frequency": 39
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-27",
+      "frequency": 68
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-28",
+      "frequency": 8
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-01",
+      "frequency": 77
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-02",
+      "frequency": 20
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-03",
+      "frequency": 56
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-04",
+      "frequency": 45
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-05",
+      "frequency": 17
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-06",
+      "frequency": 68
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-07",
+      "frequency": 22
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-08",
+      "frequency": 14
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-09",
+      "frequency": 20
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-10",
+      "frequency": 9
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-11",
+      "frequency": 8
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-12",
+      "frequency": 75
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-13",
+      "frequency": 11
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-14",
+      "frequency": 76
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-15",
+      "frequency": 41
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-16",
+      "frequency": 59
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-17",
+      "frequency": 43
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-18",
+      "frequency": 79
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-19",
+      "frequency": 30
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-20",
+      "frequency": 17
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-21",
+      "frequency": 22
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-22",
+      "frequency": 20
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-23",
+      "frequency": 29
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-24",
+      "frequency": 56
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-25",
+      "frequency": 57
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-26",
+      "frequency": 63
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-27",
+      "frequency": 66
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-28",
+      "frequency": 36
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-01",
+      "frequency": 31
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-02",
+      "frequency": 41
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-03",
+      "frequency": 30
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-04",
+      "frequency": 24
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-05",
+      "frequency": 52
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-06",
+      "frequency": 67
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-07",
+      "frequency": 21
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-08",
+      "frequency": 76
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-09",
+      "frequency": 64
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-10",
+      "frequency": 7
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-11",
+      "frequency": 15
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-12",
+      "frequency": 55
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-13",
+      "frequency": 57
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-14",
+      "frequency": 45
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-15",
+      "frequency": 48
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-16",
+      "frequency": 44
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-17",
+      "frequency": 4
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-18",
+      "frequency": 76
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-19",
+      "frequency": 76
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-20",
+      "frequency": 32
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-21",
+      "frequency": 66
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-22",
+      "frequency": 3
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-23",
+      "frequency": 19
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-24",
+      "frequency": 64
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-25",
+      "frequency": 39
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-26",
+      "frequency": 38
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-27",
+      "frequency": 1
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-28",
+      "frequency": 65
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-01",
+      "frequency": 54
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-02",
+      "frequency": 41
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-03",
+      "frequency": 15
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-04",
+      "frequency": 2
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-05",
+      "frequency": 66
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-06",
+      "frequency": 17
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-07",
+      "frequency": 33
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-08",
+      "frequency": 50
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-09",
+      "frequency": 36
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-10",
+      "frequency": 51
+    },
+    {
+      "user_id": "U6",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-11",
+      "frequency": 2
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-12",
+      "frequency": 54
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-13",
+      "frequency": 18
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-14",
+      "frequency": 14
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-15",
+      "frequency": 54
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-16",
+      "frequency": 80
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-17",
+      "frequency": 61
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-18",
+      "frequency": 66
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-19",
+      "frequency": 65
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-20",
+      "frequency": 1
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-21",
+      "frequency": 4
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-22",
+      "frequency": 58
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-23",
+      "frequency": 28
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-24",
+      "frequency": 24
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-25",
+      "frequency": 23
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-26",
+      "frequency": 10
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-27",
+      "frequency": 46
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-28",
+      "frequency": 6
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-01",
+      "frequency": 78
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-02",
+      "frequency": 76
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-03",
+      "frequency": 45
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-04",
+      "frequency": 27
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-05",
+      "frequency": 22
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-06",
+      "frequency": 3
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-07",
+      "frequency": 37
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-08",
+      "frequency": 5
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "write_code",
+      "timestamp": "2026-03-09",
+      "frequency": 2
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-10",
+      "frequency": 33
+    },
+    {
+      "user_id": "U10",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-11",
+      "frequency": 34
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "edit_employee",
+      "timestamp": "2026-03-12",
+      "frequency": 36
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "deploy_service",
+      "timestamp": "2026-03-13",
+      "frequency": 12
+    },
+    {
+      "user_id": "U9",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-14",
+      "frequency": 20
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-15",
+      "frequency": 79
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-16",
+      "frequency": 17
+    },
+    {
+      "user_id": "U8",
+      "permission_id": "view_salary",
+      "timestamp": "2026-03-17",
+      "frequency": 68
+    },
+    {
+      "user_id": "U5",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-18",
+      "frequency": 27
+    },
+    {
+      "user_id": "U7",
+      "permission_id": "read_code",
+      "timestamp": "2026-03-19",
+      "frequency": 23
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "admin_access",
+      "timestamp": "2026-03-20",
+      "frequency": 4
+    }
+  ]
+}
