@@ -1,0 +1,83 @@
+PRD (Hackathon Ready)
+🧩 Product Name
+
+AccessMind (or RoleAI / PrivGuard)
+
+🎯 Problem
+
+Organizations accumulate excessive and outdated access due to:
+
+Manual role design
+Lack of continuous review
+Over-provisioning
+
+This leads to:
+
+Insider threats
+Audit failures
+Security risks
+💡 Solution
+
+An AI-powered identity governance platform that:
+
+Learns from real usage patterns
+Automatically generates optimal roles
+Detects risky or unused access
+Recommends precise cleanup actions
+👤 Target Users
+Security teams
+IAM engineers
+Compliance teams
+Enterprises with large user bases
+🔑 Core Features
+1. Data Ingestion
+User-permission logs
+Access frequency
+Metadata (optional)
+2. Behavioral Clustering
+Groups users by actual usage
+3. Role Mining
+Generates minimal, clean roles
+4. Risk Engine
+Scores access risk using:
+Sensitivity
+Usage
+Peer deviation
+5. Recommendation Engine
+Remove unused access
+Suggest better roles
+Flag anomalies
+6. Explainability Layer
+Every suggestion justified
+7. Feedback Loop (Stretch Goal)
+Learns from user approvals
+📊 Success Metrics
+% reduction in permissions
+% unused access removed
+Role coverage improvement
+Audit issue reduction
+🧱 Tech Stack (Suggested)
+Backend: Python (FastAPI)
+ML: Scikit-learn / PyTorch
+DB: PostgreSQL
+Frontend: React
+Visualization: D3.js / Chart.js
+🚀 MVP Scope (Hackathon)
+
+Focus ONLY on:
+
+Clustering
+Role extraction
+Risk scoring
+Recommendations + UI
+
+Skip:
+
+Real integrations
+Complex ML
+🧠 Demo Flow
+Upload dataset
+Show clusters
+Show generated roles
+Highlight risky permissions
+Show cleanup recommendations
