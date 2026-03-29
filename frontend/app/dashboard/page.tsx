@@ -111,16 +111,7 @@ export default function DashboardPage() {
         <Sidebar isOpen={sidebarOpen} />
         <main className={`flex-1 transition-all duration-200 ${sidebarOpen ? 'ml-56' : 'ml-0'}`}>
           <div className="p-5 space-y-5">
-            {/* Search Bar */}
-            <div className="flex justify-end mb-2">
-              <input
-                type="text"
-                placeholder="Search users..."
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                className="h-9 pl-4 pr-4 rounded-lg bg-muted/50 border border-border/50 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all w-[250px]"
-              />
-            </div>
+            {/* Search Bar removed - only keep in RiskHeatmapTable */}
             {/* Summary Cards */}
             {summary && sparklineData && (
               <SummaryCards summary={summary} sparklineData={sparklineData} />

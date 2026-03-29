@@ -33,20 +33,7 @@ export function TopNav({ onMenuClick }: TopNavProps) {
           </div>
         </div>
 
-        {/* Center - Search */}
-        <div className="hidden md:flex flex-1 max-w-sm mx-6">
-          <div className="relative w-full">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search users, permissions..."
-              className="w-full h-9 pl-9 pr-4 rounded-lg bg-muted border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all"
-            />
-            <kbd className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none hidden sm:inline-flex h-5 select-none items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
-              <span className="text-xs">⌘</span>K
-            </kbd>
-          </div>
-        </div>
+        {/* Center - Search removed */}
 
         {/* Right section */}
         <div className="flex items-center gap-2">
