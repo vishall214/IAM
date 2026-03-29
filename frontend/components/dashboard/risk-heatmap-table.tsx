@@ -11,11 +11,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { mockUsers } from "@/lib/mock-data"
 import { User, RiskLevel, RiskReason } from "@/lib/types"
 import { cn } from "@/lib/utils"
 
 interface RiskHeatmapTableProps {
+  users: User[]
   onUserClick: (user: User) => void
 }
 
@@ -68,18 +68,18 @@ function ReasonPill({ reason }: { reason: RiskReason }) {
   )
 }
 
-export function RiskHeatmapTable({ onUserClick }: RiskHeatmapTableProps) {
+export function RiskHeatmapTable({ users, onUserClick }: RiskHeatmapTableProps) {
   const [searchQuery, setSearchQuery] = useState("")
   const [departmentFilter, setDepartmentFilter] = useState<string>("all")
   const [riskFilter, setRiskFilter] = useState<RiskLevel | "all">("all")
   
   const departments = useMemo(() => 
-    ["all", ...new Set(mockUsers.map(u => u.department))],
-    []
+    ["all", ...new Set(users.map(u => u.department))],
+    [users]
   )
   
   const filteredUsers = useMemo(() => {
-    return mockUsers.filter(user => {
+    return users.filter(user => {
       const matchesSearch = user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                            user.email.toLowerCase().includes(searchQuery.toLowerCase())
       const matchesDepartment = departmentFilter === "all" || user.department === departmentFilter
@@ -87,7 +87,7 @@ export function RiskHeatmapTable({ onUserClick }: RiskHeatmapTableProps) {
       
       return matchesSearch && matchesDepartment && matchesRisk
     })
-  }, [searchQuery, departmentFilter, riskFilter])
+  }, [searchQuery, departmentFilter, riskFilter, users])
   
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -270,7 +270,7 @@ export function RiskHeatmapTable({ onUserClick }: RiskHeatmapTableProps) {
       {/* Footer */}
       <div className="p-4 border-t border-border/50 flex items-center justify-between">
         <p className="text-sm text-muted-foreground">
-          Showing {filteredUsers.length} of {mockUsers.length} users
+          Showing {filteredUsers.length} of {users.length} users
         </p>
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" className="bg-muted/50 border-border/50 text-foreground" disabled>

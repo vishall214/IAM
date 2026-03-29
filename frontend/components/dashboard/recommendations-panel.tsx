@@ -4,8 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { mockRecommendations } from "@/lib/mock-data"
-import { ActionType } from "@/lib/types"
+import { ActionType, Recommendation } from "@/lib/types"
 import { cn } from "@/lib/utils"
 import { 
   Trash2, 
@@ -18,6 +17,7 @@ import {
 } from "lucide-react"
 
 interface RecommendationsPanelProps {
+  recommendations: Recommendation[]
   selectedIds: string[]
   onToggle: (id: string) => void
   onSimulate: () => void
@@ -64,7 +64,7 @@ function ConfidenceBadge({ confidence }: { confidence: number }) {
   )
 }
 
-export function RecommendationsPanel({ selectedIds, onToggle, onSimulate }: RecommendationsPanelProps) {
+export function RecommendationsPanel({ recommendations, selectedIds, onToggle, onSimulate }: RecommendationsPanelProps) {
   const selectedCount = selectedIds.length
   
   return (
@@ -78,7 +78,7 @@ export function RecommendationsPanel({ selectedIds, onToggle, onSimulate }: Reco
               AI Recommendations
             </h3>
             <p className="text-xs text-muted-foreground">
-              {mockRecommendations.length} suggested actions
+              {recommendations.length} suggested actions
             </p>
           </div>
           {selectedCount > 0 && (
@@ -91,7 +91,7 @@ export function RecommendationsPanel({ selectedIds, onToggle, onSimulate }: Reco
       
       {/* Recommendations List */}
       <div className="max-h-[420px] overflow-y-auto">
-        {mockRecommendations.map((rec) => {
+        {recommendations.map((rec) => {
           const config = actionConfig[rec.actionType]
           const isSelected = selectedIds.includes(rec.id)
           const isHighRisk = rec.riskScore >= 80
@@ -219,7 +219,7 @@ export function RecommendationsPanel({ selectedIds, onToggle, onSimulate }: Reco
             variant="outline" 
             size="sm" 
             className="flex-1 text-xs border-border text-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/20"
-            onClick={() => mockRecommendations.forEach(r => !selectedIds.includes(r.id) && onToggle(r.id))}
+            onClick={() => recommendations.forEach(r => !selectedIds.includes(r.id) && onToggle(r.id))}
           >
             Select All
           </Button>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { AlertTriangle, AlertCircle, CheckCircle, Gauge, Clock, Database } from "lucide-react"
-import { summaryData, sparklineData } from "@/lib/mock-data"
+import { TransformedSummary, TransformedSparkline } from "@/lib/transform"
 import { 
   LineChart, 
   Line, 
@@ -10,6 +10,11 @@ import {
   RadialBarChart,
   RadialBar
 } from "recharts"
+
+interface SummaryCardsProps {
+  summary: TransformedSummary
+  sparklineData: TransformedSparkline
+}
 
 function SparklineChart({ data, color }: { data: number[], color: string }) {
   const chartData = data.map((value, index) => ({ value, index }))
@@ -143,7 +148,7 @@ function SummaryCard({
   )
 }
 
-export function SummaryCards() {
+export function SummaryCards({ summary, sparklineData }: SummaryCardsProps) {
   return (
     <div className="space-y-4">
       {/* Meta info */}
@@ -152,11 +157,11 @@ export function SummaryCards() {
         <div className="flex items-center gap-4 text-xs text-muted-foreground">
           <div className="flex items-center gap-1.5">
             <Clock className="h-3.5 w-3.5" />
-            <span>Last analyzed: {summaryData.lastAnalyzed}</span>
+            <span>Last analyzed: {summary.lastAnalyzed}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <Database className="h-3.5 w-3.5" />
-            <span>Dataset: {summaryData.datasetSize} users</span>
+            <span>Dataset: {summary.datasetSize} users</span>
           </div>
         </div>
       </div>
@@ -165,7 +170,7 @@ export function SummaryCards() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <SummaryCard
           title="High Risk Users"
-          value={summaryData.highRiskUsers}
+          value={summary.highRiskUsers}
           icon={<AlertTriangle className="h-4 w-4" />}
           iconBg="rgba(220, 38, 38, 0.1)"
           iconColor="#DC2626"
@@ -177,7 +182,7 @@ export function SummaryCards() {
         
         <SummaryCard
           title="Medium Risk Users"
-          value={summaryData.mediumRiskUsers}
+          value={summary.mediumRiskUsers}
           icon={<AlertCircle className="h-4 w-4" />}
           iconBg="rgba(245, 158, 11, 0.1)"
           iconColor="#F59E0B"
@@ -187,7 +192,7 @@ export function SummaryCards() {
         
         <SummaryCard
           title="Low Risk Users"
-          value={summaryData.lowRiskUsers}
+          value={summary.lowRiskUsers}
           icon={<CheckCircle className="h-4 w-4" />}
           iconBg="rgba(16, 185, 129, 0.1)"
           iconColor="#10B981"
@@ -206,12 +211,12 @@ export function SummaryCards() {
           <p className="text-xs text-muted-foreground mb-1 uppercase tracking-wide">Average Risk Score</p>
           <div className="flex items-center gap-2">
             <span className="text-2xl font-semibold gradient-text">
-              <AnimatedNumber value={summaryData.averageRiskScore} />
+              <AnimatedNumber value={summary.averageRiskScore} />
             </span>
             <span className="text-sm text-muted-foreground">/100</span>
           </div>
           <div className="mt-1">
-            <GaugeChart value={summaryData.averageRiskScore} />
+            <GaugeChart value={summary.averageRiskScore} />
           </div>
         </div>
       </div>

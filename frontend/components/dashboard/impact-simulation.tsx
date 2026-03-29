@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { summaryData } from "@/lib/mock-data"
+import { TransformedSummary } from "@/lib/transform"
 import { cn } from "@/lib/utils"
 import { 
   ArrowRight, 
@@ -17,6 +17,7 @@ import {
 } from "lucide-react"
 
 interface ImpactSimulationProps {
+  summary: TransformedSummary
   selectedCount: number
   onApply: () => void
   onClose: () => void
@@ -117,7 +118,7 @@ function MetricCard({ metric, delay }: { metric: MetricComparison; delay: number
   )
 }
 
-export function ImpactSimulation({ selectedCount, onApply, onClose }: ImpactSimulationProps) {
+export function ImpactSimulation({ summary, selectedCount, onApply, onClose }: ImpactSimulationProps) {
   const [phase, setPhase] = useState<"simulating" | "complete">("simulating")
   
   // Calculate simulated improvements based on selections
@@ -129,22 +130,22 @@ export function ImpactSimulation({ selectedCount, onApply, onClose }: ImpactSimu
     {
       label: "Total Permissions",
       icon: <Key className="h-4 w-4" />,
-      before: summaryData.totalPermissions,
-      after: Math.round(summaryData.totalPermissions * (1 - permissionReduction / 100)),
+      before: summary.totalPermissions,
+      after: Math.round(summary.totalPermissions * (1 - permissionReduction / 100)),
       improvement: permissionReduction
     },
     {
       label: "High Risk Users",
       icon: <Users className="h-4 w-4" />,
-      before: summaryData.highRiskUsers,
-      after: Math.max(1, Math.round(summaryData.highRiskUsers * (1 - highRiskReduction / 100))),
+      before: summary.highRiskUsers,
+      after: Math.max(1, Math.round(summary.highRiskUsers * (1 - highRiskReduction / 100))),
       improvement: highRiskReduction
     },
     {
       label: "Avg Permissions/User",
       icon: <Shield className="h-4 w-4" />,
-      before: Math.round(summaryData.totalPermissions / summaryData.datasetSize),
-      after: Math.round((summaryData.totalPermissions / summaryData.datasetSize) * (1 - avgPermReduction / 100)),
+      before: Math.round(summary.totalPermissions / summary.datasetSize),
+      after: Math.round((summary.totalPermissions / summary.datasetSize) * (1 - avgPermReduction / 100)),
       improvement: avgPermReduction
     }
   ]

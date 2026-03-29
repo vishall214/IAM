@@ -1,5 +1,7 @@
 "use client"
 
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { 
   LayoutDashboard, 
   AlertTriangle, 
@@ -8,7 +10,8 @@ import {
   Settings,
   Shield,
   Activity,
-  FileBarChart
+  FileBarChart,
+  Upload
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -17,17 +20,20 @@ interface SidebarProps {
 }
 
 const navItems = [
-  { icon: LayoutDashboard, label: "Dashboard", active: false },
-  { icon: AlertTriangle, label: "Risk Analysis", active: true },
-  { icon: Users, label: "Roles", active: false },
-  { icon: Lightbulb, label: "Recommendations", active: false },
-  { icon: Shield, label: "Access Reviews", active: false },
-  { icon: Activity, label: "Activity Log", active: false },
-  { icon: FileBarChart, label: "Reports", active: false },
-  { icon: Settings, label: "Settings", active: false },
+  { icon: Upload, label: "Upload Data", href: "/" },
+  { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
+  { icon: AlertTriangle, label: "Risk Analysis", href: "/dashboard" },
+  { icon: Users, label: "Clusters", href: "/clusters" },
+  { icon: Shield, label: "Roles", href: "/roles" },
+  { icon: Lightbulb, label: "Recommendations", href: "/recommendations" },
+  { icon: Activity, label: "Activity Log", href: "#" },
+  { icon: FileBarChart, label: "Reports", href: "#" },
+  { icon: Settings, label: "Settings", href: "#" },
 ]
 
 export function Sidebar({ isOpen }: SidebarProps) {
+  const pathname = usePathname()
+  
   return (
     <aside 
       className={cn(
@@ -37,20 +43,39 @@ export function Sidebar({ isOpen }: SidebarProps) {
     >
       <div className="flex flex-col h-full p-3">
         <nav className="flex-1 space-y-0.5">
-          {navItems.map((item) => (
-            <button
-              key={item.label}
-              className={cn(
-                "w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors duration-150",
-                item.active 
-                  ? "bg-primary/10 text-primary font-medium" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
-              )}
-            >
-              <item.icon className="h-4 w-4" />
-              <span>{item.label}</span>
-            </button>
-          ))}
+          {navItems.map((item) => {
+            const isActive = item.href !== "#" && pathname === item.href
+            const isDisabled = item.href === "#"
+            
+            if (isDisabled) {
+              return (
+                <button
+                  key={item.label}
+                  disabled
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-muted-foreground/50 cursor-not-allowed"
+                >
+                  <item.icon className="h-4 w-4" />
+                  <span>{item.label}</span>
+                </button>
+              )
+            }
+            
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={cn(
+                  "w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors duration-150",
+                  isActive 
+                    ? "bg-primary/10 text-primary font-medium" 
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                )}
+              >
+                <item.icon className="h-4 w-4" />
+                <span>{item.label}</span>
+              </Link>
+            )
+          })}
         </nav>
 
         {/* Bottom section - Security Score */}

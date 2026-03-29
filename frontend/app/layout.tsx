@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { AnalysisProvider } from '@/lib/analysis-context'
+import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 
 const inter = Inter({ 
@@ -11,7 +13,6 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'AccessMind | AI-Powered Identity Governance',
   description: 'Enterprise security analytics and identity governance platform powered by AI',
-  generator: 'v0.app',
   icons: {
     icon: [
       {
@@ -43,7 +44,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${inter.variable} font-sans antialiased`}>
-        {children}
+        <AnalysisProvider>
+          {children}
+        </AnalysisProvider>
+        <Toaster />
         <Analytics />
       </body>
     </html>
