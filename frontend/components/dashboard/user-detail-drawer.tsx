@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -7,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { User, RiskLevel, AccessEvent } from "@/lib/types"
 import { cn } from "@/lib/utils"
+import { useAnalysis } from "@/lib/analysis-context"
 import { 
   Shield, 
   Activity, 
@@ -16,7 +18,8 @@ import {
   CheckCircle,
   XCircle,
   TrendingUp,
-  TrendingDown
+  TrendingDown,
+  Loader
 } from "lucide-react"
 import { 
   BarChart, 
@@ -125,6 +128,11 @@ function AccessTimeline({ events }: { events: AccessEvent[] }) {
 }
 
 export function UserDetailDrawer({ user, open, onOpenChange }: UserDetailDrawerProps) {
+  const { data: analysisData, executeAction, actionError, clearActionError } = useAnalysis()
+  const [executingAction, setExecutingAction] = useState<"review" | "revoke" | null>(null)
+  const [completedActions, setCompletedActions] = useState<Set<"review" | "revoke">>(new Set())
+  const [localError, setLocalError] = useState<string | null>(null)
+
   if (!user) return null
   
   const riskBreakdownData = [
@@ -133,6 +141,67 @@ export function UserDetailDrawer({ user, open, onOpenChange }: UserDetailDrawerP
     { name: 'Peer Gap', value: user.peerComparison, fill: '#06B6D4' },
     { name: 'Recency', value: user.recencyGap, fill: '#F59E0B' },
   ]
+
+  // Find all recommendations for this user
+  const userRecommendations = analysisData?.recommendations?.filter(
+    rec => rec.userId === user.id || rec.user?.name === user.name
+  ) || []
+
+  const handleReviewAccess = async () => {
+    setExecutingAction("review")
+    setLocalError(null)
+    try {
+      if (!userRecommendations.length) {
+        throw new Error("No recommendations found for this user")
+      }
+
+      // Execute review action on first matching recommendation
+      const firstRec = userRecommendations[0]
+      await executeAction(firstRec.id, "review")
+      
+      setCompletedActions(prev => new Set(prev).add("review"))
+      
+      // Close drawer after a brief moment
+      setTimeout(() => {
+        setExecutingAction(null)
+        onOpenChange(false)
+      }, 800)
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Review failed"
+      console.error("Review failed:", err)
+      setLocalError(message)
+      setExecutingAction(null)
+    }
+  }
+
+  const handleRevokeAccess = async () => {
+    setExecutingAction("revoke")
+    setLocalError(null)
+    try {
+      if (!userRecommendations.length) {
+        throw new Error("No recommendations found for this user")
+      }
+
+      // Execute revoke action on first matching recommendation
+      const firstRec = userRecommendations[0]
+      await executeAction(firstRec.id, "revoke")
+      
+      setCompletedActions(prev => new Set(prev).add("revoke"))
+      
+      // Close drawer after a brief moment
+      setTimeout(() => {
+        setExecutingAction(null)
+        onOpenChange(false)
+      }, 800)
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Revoke failed"
+      console.error("Revoke failed:", err)
+      setLocalError(message)
+      setExecutingAction(null)
+    }
+  }
+
+  const displayError = localError || actionError
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -160,6 +229,22 @@ export function UserDetailDrawer({ user, open, onOpenChange }: UserDetailDrawerP
                 </div>
               </div>
             </SheetHeader>
+            
+            {/* No Recommendations Message */}
+            {userRecommendations.length === 0 && (
+              <div className="glass-card rounded-lg p-3 bg-blue-500/10 border border-blue-500/20 text-xs text-blue-500 flex items-center gap-2">
+                <AlertTriangle className="h-3.5 w-3.5 flex-shrink-0" />
+                No recommendations pending for this user
+              </div>
+            )}
+            
+            {/* Error Banner */}
+            {displayError && (
+              <div className="glass-card rounded-lg p-3 bg-red-500/10 border border-red-500/20 text-xs text-red-500 flex items-center gap-2">
+                <AlertTriangle className="h-3.5 w-3.5 flex-shrink-0" />
+                {displayError}
+              </div>
+            )}
             
             {/* AI Explanation Header */}
             <div className="glass-card rounded-lg p-3 border-l-2 border-l-primary">
@@ -321,13 +406,60 @@ export function UserDetailDrawer({ user, open, onOpenChange }: UserDetailDrawerP
             
             {/* Actions */}
             <div className="flex gap-2 pt-2">
-              <Button size="sm" className="flex-1 bg-primary hover:bg-primary/90 text-white text-xs">
-                <CheckCircle className="h-3.5 w-3.5 mr-1.5" />
-                Review Access
+              <Button 
+                size="sm" 
+                className={cn(
+                  "flex-1 text-xs transition-all",
+                  completedActions.has("review") ? "bg-green-500/10 text-green-500 hover:bg-green-500/20" :
+                  "bg-primary hover:bg-primary/90 text-white"
+                )}
+                disabled={executingAction !== null || completedActions.has("review") || userRecommendations.length === 0}
+                onClick={handleReviewAccess}
+              >
+                {executingAction === "review" ? (
+                  <>
+                    <Loader className="h-3.5 w-3.5 mr-1.5 animate-spin" />
+                    Reviewing...
+                  </>
+                ) : completedActions.has("review") ? (
+                  <>
+                    <CheckCircle className="h-3.5 w-3.5 mr-1.5" />
+                    Under Review
+                  </>
+                ) : (
+                  <>
+                    <CheckCircle className="h-3.5 w-3.5 mr-1.5" />
+                    Review Access
+                  </>
+                )}
               </Button>
-              <Button size="sm" variant="outline" className="flex-1 border-border text-foreground hover:bg-destructive/10 hover:text-destructive hover:border-destructive/30 text-xs">
-                <XCircle className="h-3.5 w-3.5 mr-1.5" />
-                Revoke Access
+              <Button 
+                size="sm" 
+                variant="outline" 
+                className={cn(
+                  "flex-1 text-xs transition-all",
+                  completedActions.has("revoke") ? "border-green-500/30 bg-green-500/10 text-green-500 hover:bg-green-500/20 hover:border-green-500/50" :
+                  "border-border text-foreground hover:bg-destructive/10 hover:text-destructive hover:border-destructive/30"
+                )}
+                disabled={executingAction !== null || completedActions.has("revoke") || userRecommendations.length === 0}
+                onClick={handleRevokeAccess}
+              >
+                {executingAction === "revoke" ? (
+                  <>
+                    <Loader className="h-3.5 w-3.5 mr-1.5 animate-spin" />
+                    Revoking...
+                  </>
+                ) : completedActions.has("revoke") ? (
+                  <>
+                    <CheckCircle className="h-3.5 w-3.5 mr-1.5" />
+                    Revoked
+                  </>
+                ) : (
+                  <>
+                    <XCircle className="h-3.5 w-3.5 mr-1.5" />
+                    Revoke Access
+                  </>
+                )}
               </Button>
             </div>
           </div>

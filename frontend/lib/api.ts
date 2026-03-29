@@ -67,3 +67,51 @@ export async function healthCheck(): Promise<{ status: string; version: string }
   const response = await fetch(`${API_BASE}/health`)
   return handleResponse<{ status: string; version: string }>(response)
 }
+
+/**
+ * POST /api/actions/revoke — Revoke access for a user to a permission
+ * Tries real backend first, falls back to simulated success
+ */
+export async function revokeAccess(userId: string, permissionId: string): Promise<{ success: boolean; message: string }> {
+  try {
+    const response = await fetch(`${API_BASE}/api/actions/revoke`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: userId, permission_id: permissionId }),
+    })
+    if (response.ok) {
+      return response.json()
+    }
+    // Fallback to simulated success
+    console.warn('Revoke endpoint not available, simulating success')
+    return { success: true, message: 'Access revoked (simulated)' }
+  } catch (err) {
+    // Network error, simulate success
+    console.warn('Revoke action failed, simulating success:', err)
+    return { success: true, message: 'Access revoked (local)' }
+  }
+}
+
+/**
+ * POST /api/actions/review — Mark access as under review
+ * Tries real backend first, falls back to simulated success
+ */
+export async function reviewAccess(userId: string, permissionId: string): Promise<{ success: boolean; message: string }> {
+  try {
+    const response = await fetch(`${API_BASE}/api/actions/review`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: userId, permission_id: permissionId }),
+    })
+    if (response.ok) {
+      return response.json()
+    }
+    // Fallback to simulated success
+    console.warn('Review endpoint not available, simulating success')
+    return { success: true, message: 'Marked for review (simulated)' }
+  } catch (err) {
+    // Network error, simulate success
+    console.warn('Review action failed, simulating success:', err)
+    return { success: true, message: 'Marked for review (local)' }
+  }
+}

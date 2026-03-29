@@ -1,11 +1,13 @@
 "use client"
 
+import { useState } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { ActionType, Recommendation } from "@/lib/types"
 import { cn } from "@/lib/utils"
+import { useAnalysis } from "@/lib/analysis-context"
 import { 
   Trash2, 
   Eye, 
@@ -13,7 +15,9 @@ import {
   Sparkles,
   Zap,
   CheckCircle,
-  XCircle
+  XCircle,
+  AlertCircle,
+  Loader
 } from "lucide-react"
 
 interface RecommendationsPanelProps {
@@ -66,7 +70,38 @@ function ConfidenceBadge({ confidence }: { confidence: number }) {
 
 export function RecommendationsPanel({ recommendations, selectedIds, onToggle, onSimulate }: RecommendationsPanelProps) {
   const selectedCount = selectedIds.length
-  
+  const { executeAction, actionError } = useAnalysis()
+  const [executingActions, setExecutingActions] = useState<Set<string>>(new Set())
+  const [actionResults, setActionResults] = useState<Map<string, { type: "revoke" | "review" | "ignore"; timestamp: string }>>(new Map())
+
+  const handleAction = async (recId: string, action: "revoke" | "review" | "ignore") => {
+    if (action === "ignore") {
+      // Mark as ignored (local only)
+      setActionResults(prev => new Map(prev).set(recId, { type: "ignore", timestamp: new Date().toISOString() }))
+      return
+    }
+
+    setExecutingActions(prev => new Set(prev).add(recId))
+    try {
+      await executeAction(recId, action)
+      setActionResults(prev => new Map(prev).set(recId, { type: action, timestamp: new Date().toISOString() }))
+    } catch (err) {
+      console.error(`Failed to ${action}:`, err)
+      // Show error but don't mark as completed
+    } finally {
+      setExecutingActions(prev => {
+        const next = new Set(prev)
+        next.delete(recId)
+        return next
+      })
+    }
+  }
+
+  const getActionStatus = (recId: string) => {
+    const rec = recommendations.find(r => r.id === recId)
+    return rec?.status || actionResults.get(recId)?.type
+  }
+
   return (
     <div className="glass-card rounded-xl overflow-hidden h-fit">
       {/* Header */}
@@ -87,6 +122,12 @@ export function RecommendationsPanel({ recommendations, selectedIds, onToggle, o
             </Badge>
           )}
         </div>
+        {actionError && (
+          <div className="mt-2 flex items-center gap-1.5 text-[10px] text-red-500 bg-red-500/10 p-1.5 rounded">
+            <AlertCircle className="h-3 w-3 flex-shrink-0" />
+            {actionError}
+          </div>
+        )}
       </div>
       
       {/* Recommendations List */}
@@ -95,6 +136,9 @@ export function RecommendationsPanel({ recommendations, selectedIds, onToggle, o
           const config = actionConfig[rec.actionType]
           const isSelected = selectedIds.includes(rec.id)
           const isHighRisk = rec.riskScore >= 80
+          const status = getActionStatus(rec.id)
+          const isExecuting = executingActions.has(rec.id)
+          const isCompleted = status === "revoked" || status === "reviewed" || status === "ignored" || rec.status === "revoked" || rec.status === "reviewed"
           
           return (
             <div 
@@ -102,13 +146,15 @@ export function RecommendationsPanel({ recommendations, selectedIds, onToggle, o
               className={cn(
                 "p-3 border-b border-border transition-colors duration-150",
                 isSelected && "bg-primary/5",
-                isHighRisk && !isSelected && "glow-high-risk"
+                isHighRisk && !isSelected && "glow-high-risk",
+                isCompleted && "opacity-60 bg-muted/30"
               )}
             >
               <div className="flex items-start gap-2.5">
                 <Checkbox 
                   checked={isSelected}
                   onCheckedChange={() => onToggle(rec.id)}
+                  disabled={isCompleted}
                   className="mt-0.5 h-4 w-4 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
                 />
                 
@@ -173,21 +219,84 @@ export function RecommendationsPanel({ recommendations, selectedIds, onToggle, o
                   
                   {/* Quick Actions */}
                   <div className="flex items-center gap-1.5">
+                    {/* Apply / Revoke Button */}
                     <Button 
                       variant="ghost" 
                       size="sm"
-                      className="h-6 px-2 text-[10px] text-green-500 hover:bg-green-500/10 hover:text-green-500"
+                      disabled={isExecuting || isCompleted}
+                      onClick={() => handleAction(rec.id, "revoke")}
+                      className={cn(
+                        "h-6 px-2 text-[10px]",
+                        status === "revoked" ? "text-green-500 bg-green-500/10 hover:bg-green-500/20" :
+                        status === "reviewed" || status === "ignored" ? "text-gray-400 cursor-not-allowed" :
+                        "text-green-500 hover:bg-green-500/10 hover:text-green-500"
+                      )}
                     >
-                      <CheckCircle className="h-3 w-3 mr-1" />
-                      Apply
+                      {isExecuting ? (
+                        <>
+                          <Loader className="h-3 w-3 mr-1 animate-spin" />
+                          {rec.actionType === "REVIEW" ? "Reviewing..." : "Revoking..."}
+                        </>
+                      ) : status === "revoked" ? (
+                        <>
+                          <CheckCircle className="h-3 w-3 mr-1" />
+                          Revoked
+                        </>
+                      ) : (
+                        <>
+                          <CheckCircle className="h-3 w-3 mr-1" />
+                          {rec.actionType === "REVIEW" ? "Review" : "Apply"}
+                        </>
+                      )}
                     </Button>
+
+                    {/* Review Button (for REMOVE recommendations) */}
+                    {rec.actionType === "REMOVE" && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        disabled={isExecuting || isCompleted}
+                        onClick={() => handleAction(rec.id, "review")}
+                        className={cn(
+                          "h-6 px-2 text-[10px]",
+                          status === "reviewed" ? "text-orange-500 bg-orange-500/10 hover:bg-orange-500/20" :
+                          status === "revoked" || status === "ignored" ? "text-gray-400 cursor-not-allowed" :
+                          "text-orange-500 hover:bg-orange-500/10 hover:text-orange-500"
+                        )}
+                      >
+                        {isExecuting ? (
+                          <>
+                            <Loader className="h-3 w-3 mr-1 animate-spin" />
+                            Reviewing...
+                          </>
+                        ) : status === "reviewed" ? (
+                          <>
+                            <Eye className="h-3 w-3 mr-1" />
+                            Under Review
+                          </>
+                        ) : (
+                          <>
+                            <Eye className="h-3 w-3 mr-1" />
+                            Review
+                          </>
+                        )}
+                      </Button>
+                    )}
+
+                    {/* Ignore Button */}
                     <Button 
                       variant="ghost" 
                       size="sm"
-                      className="h-6 px-2 text-[10px] text-muted-foreground hover:bg-muted"
+                      disabled={isCompleted}
+                      onClick={() => handleAction(rec.id, "ignore")}
+                      className={cn(
+                        "h-6 px-2 text-[10px]",
+                        status === "ignored" ? "text-gray-400 bg-muted hover:bg-muted" :
+                        "text-muted-foreground hover:bg-muted"
+                      )}
                     >
                       <XCircle className="h-3 w-3 mr-1" />
-                      Ignore
+                      {status === "ignored" ? "Ignored" : "Ignore"}
                     </Button>
                   </div>
                 </div>

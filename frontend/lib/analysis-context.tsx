@@ -2,7 +2,8 @@
 
 import React, { createContext, useContext, useState, useCallback } from "react"
 import { AnalysisResult, AnalysisRequest } from "./api-types"
-import { analyzeData, uploadCSV } from "./api"
+import { Recommendation } from "./types"
+import { analyzeData, uploadCSV, revokeAccess, reviewAccess } from "./api"
 
 interface AnalysisContextType {
   /** The full analysis result from the backend */
@@ -19,6 +20,12 @@ interface AnalysisContextType {
   runCSVAnalysis: (file: File) => Promise<void>
   /** Clear the current results */
   clearResults: () => void
+  /** Execute action on recommendation (revoke or review) */
+  executeAction: (recommendationId: string, action: "revoke" | "review") => Promise<void>
+  /** Get action error if any */
+  actionError: string | null
+  /** Clear action error */
+  clearActionError: () => void
 }
 
 const AnalysisContext = createContext<AnalysisContextType | null>(null)
@@ -28,6 +35,7 @@ export function AnalysisProvider({ children }: { children: React.ReactNode }) {
   const [userMetadata, setUserMetadata] = useState<Map<string, { name: string; email: string }> | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [actionError, setActionError] = useState<string | null>(null)
 
   const runAnalysis = useCallback(async (payload: AnalysisRequest) => {
     setIsLoading(true)
@@ -76,8 +84,73 @@ export function AnalysisProvider({ children }: { children: React.ReactNode }) {
     setError(null)
   }, [])
 
+  const executeAction = useCallback(async (recommendationId: string, action: "revoke" | "review") => {
+    setActionError(null)
+    try {
+      if (!data?.recommendations) {
+        throw new Error("No recommendations available")
+      }
+
+      // Find the recommendation
+      const rec = data.recommendations.find(r => r.id === recommendationId)
+      if (!rec) {
+        throw new Error("Recommendation not found")
+      }
+
+      // Extract user_id and permission_id
+      const userId = rec.userId || rec.user?.name?.split(" ")[0] || "unknown"
+      const permissionId = rec.permissionId || rec.permission?.toLowerCase().replace(/\s+/g, "_") || "unknown"
+
+      // Execute the action
+      let result
+      if (action === "revoke") {
+        result = await revokeAccess(userId, permissionId)
+      } else {
+        result = await reviewAccess(userId, permissionId)
+      }
+
+      if (!result.success) {
+        throw new Error(result.message || "Action failed")
+      }
+
+      // Update the recommendation status in state
+      const newData = { ...data }
+      const recIndex = newData.recommendations.findIndex(r => r.id === recommendationId)
+      if (recIndex !== -1) {
+        const updatedRec = { ...newData.recommendations[recIndex] }
+        if (action === "revoke") {
+          updatedRec.status = "revoked"
+        } else {
+          updatedRec.status = "reviewed"
+        }
+        updatedRec.actionTimestamp = new Date().toISOString()
+        newData.recommendations[recIndex] = updatedRec
+        setData(newData)
+      }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Action failed"
+      setActionError(message)
+      throw err
+    }
+  }, [data])
+
+  const clearActionError = useCallback(() => {
+    setActionError(null)
+  }, [])
+
   return (
-    <AnalysisContext.Provider value={{ data, userMetadata, isLoading, error, runAnalysis, runCSVAnalysis, clearResults }}>
+    <AnalysisContext.Provider value={{
+      data,
+      userMetadata,
+      isLoading,
+      error,
+      runAnalysis,
+      runCSVAnalysis,
+      clearResults,
+      executeAction,
+      actionError,
+      clearActionError
+    }}>
       {children}
     </AnalysisContext.Provider>
   )

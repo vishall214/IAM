@@ -34,6 +34,7 @@ export interface AccessEvent {
 }
 
 export type ActionType = "REMOVE" | "REVIEW" | "MONITOR"
+export type RecommendationStatus = "pending" | "reviewed" | "revoked" | "ignored"
 
 export interface Recommendation {
   id: string
@@ -46,6 +47,14 @@ export interface Recommendation {
   riskScore: number
   confidence: number
   reasons: string[]
+  /** Unique identifier for the user (needed for backend action) */
+  userId?: string
+  /** Unique identifier for the permission (needed for backend action) */
+  permissionId?: string
+  /** Current status of the recommendation */
+  status: RecommendationStatus
+  /** Timestamp of the last action */
+  actionTimestamp?: string
 }
 
 export interface MetricsData {

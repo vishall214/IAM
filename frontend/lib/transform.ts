@@ -140,6 +140,9 @@ export function transformRecommendationsFromAnalysis(result: AnalysisResult, use
       riskScore: normalizedScore,
       confidence: Math.min(99, normalizedScore + 5),
       reasons: [rec.reason, rec.impact].filter(Boolean),
+      userId: rec.user_id,
+      permissionId: rec.permission_id,
+      status: "pending",
     }
   })
 }
