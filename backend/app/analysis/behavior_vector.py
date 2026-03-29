@@ -1,27 +1,35 @@
 """
 STEP 2: Behavior Vector Creation Module
 Creates weighted permission vectors for each user
+Includes IMPROVEMENT 6: Temporal anomaly detection
 """
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Tuple
 from datetime import datetime
 import math
 import logging
+from .temporal_anomaly import TemporalAnomalyDetector
 
 logger = logging.getLogger(__name__)
 
 
 class BehaviorVectorCreator:
-    """Creates weighted user behavior vectors"""
+    """Creates weighted user behavior vectors with temporal anomaly detection"""
     
-    def __init__(self, reference_date: datetime = None):
+    def __init__(self, reference_date: datetime = None, enable_anomaly_detection: bool = True):
         self.reference_date = reference_date or datetime.now()
+        self.enable_anomaly_detection = enable_anomaly_detection
+        self.anomaly_detector = TemporalAnomalyDetector() if enable_anomaly_detection else None
     
-    def create_vectors(self, users: List[Dict], logs: List[Dict], permissions: List[Dict]) -> Dict[str, Dict]:
+    def create_vectors(self, users: List[Dict], logs: List[Dict], permissions: List[Dict]) -> Tuple[Dict[str, Dict], Dict]:
         """
-        Create behavior vectors for all users
-        Returns: {user_id: {permission_id: weighted_score}}
+        Create behavior vectors for all users + detect anomalies
+        
+        Returns: 
+            (vectors: {user_id: {permission_id: weighted_score}},
+             anomalies: {user_id: {anomaly info}})
         """
         vectors = {}
+        anomalies = {}
         
         # Create permission sensitivity map
         sensitivity_map = {p["permission_id"]: p.get("sensitivity_level", "low") for p in permissions}
@@ -44,8 +52,16 @@ class BehaviorVectorCreator:
                 sensitivity_map,
                 sensitivity_weights
             )
+            
+            # IMPROVEMENT 6: Detect temporal anomalies
+            if self.enable_anomaly_detection and self.anomaly_detector:
+                anomalies[uid] = self.anomaly_detector.detect_anomalies(
+                    uid,
+                    user_logs.get(uid, []),
+                    self.reference_date
+                )
         
-        return vectors
+        return vectors, anomalies
     
     def _create_user_vector(
         self,
