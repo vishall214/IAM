@@ -1,0 +1,601 @@
+{
+  "metadata": {
+    "analysis_date": "2026-03-29T14:41:42.001242",
+    "status": "SUCCESS"
+  },
+  "validation_report": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "data_quality": {
+      "total_users": 4,
+      "unique_users": 4,
+      "total_permissions": 6,
+      "total_accesses": 9,
+      "invalid_references": 0
+    }
+  },
+  "anomalies": {
+    "U1": {
+      "user_id": "U1",
+      "anomalies": [
+        {
+          "type": "UNUSUAL_TIME_PATTERN",
+          "description": "Access pattern outside normal business hours",
+          "off_hours_percentage": "100%",
+          "severity": "MEDIUM",
+          "risk_adjustment": 0.1
+        },
+        {
+          "type": "PERMISSION_ACQUISITION",
+          "description": "Sudden increase in permission scope",
+          "new_permissions": [
+            "read_code",
+            "write_code"
+          ],
+          "growth_percentage": "200%",
+          "severity": "MEDIUM",
+          "risk_adjustment": 0.25
+        }
+      ],
+      "anomaly_score": 0.4,
+      "pattern_summary": {
+        "total_logs": 3,
+        "unique_permissions": 3,
+        "total_frequency": 85,
+        "avg_frequency": 28.333333333333332
+      },
+      "risk_flag": "TEMPORAL_ANOMALY"
+    },
+    "U2": {
+      "user_id": "U2",
+      "anomalies": [
+        {
+          "type": "UNUSUAL_TIME_PATTERN",
+          "description": "Access pattern outside normal business hours",
+          "off_hours_percentage": "100%",
+          "severity": "MEDIUM",
+          "risk_adjustment": 0.1
+        }
+      ],
+      "anomaly_score": 0.2,
+      "pattern_summary": {
+        "total_logs": 2,
+        "unique_permissions": 2,
+        "total_frequency": 70,
+        "avg_frequency": 35.0
+      },
+      "risk_flag": "TEMPORAL_ANOMALY"
+    },
+    "U3": {
+      "user_id": "U3",
+      "anomalies": [
+        {
+          "type": "UNUSUAL_TIME_PATTERN",
+          "description": "Access pattern outside normal business hours",
+          "off_hours_percentage": "100%",
+          "severity": "MEDIUM",
+          "risk_adjustment": 0.1
+        },
+        {
+          "type": "PERMISSION_ACQUISITION",
+          "description": "Sudden increase in permission scope",
+          "new_permissions": [
+            "view_salary"
+          ],
+          "growth_percentage": "100%",
+          "severity": "MEDIUM",
+          "risk_adjustment": 0.25
+        }
+      ],
+      "anomaly_score": 0.4,
+      "pattern_summary": {
+        "total_logs": 2,
+        "unique_permissions": 2,
+        "total_frequency": 41,
+        "avg_frequency": 20.5
+      },
+      "risk_flag": "TEMPORAL_ANOMALY"
+    },
+    "U4": {
+      "user_id": "U4",
+      "anomalies": [
+        {
+          "type": "UNUSUAL_TIME_PATTERN",
+          "description": "Access pattern outside normal business hours",
+          "off_hours_percentage": "100%",
+          "severity": "MEDIUM",
+          "risk_adjustment": 0.1
+        },
+        {
+          "type": "PERMISSION_ACQUISITION",
+          "description": "Sudden increase in permission scope",
+          "new_permissions": [
+            "edit_employee"
+          ],
+          "growth_percentage": "100%",
+          "severity": "MEDIUM",
+          "risk_adjustment": 0.25
+        }
+      ],
+      "anomaly_score": 0.4,
+      "pattern_summary": {
+        "total_logs": 2,
+        "unique_permissions": 2,
+        "total_frequency": 55,
+        "avg_frequency": 27.5
+      },
+      "risk_flag": "TEMPORAL_ANOMALY"
+    }
+  },
+  "clusters": [
+    {
+      "cluster_id": "cluster_1",
+      "cluster_name": "Cluster (2 users)",
+      "users": [
+        "U1",
+        "U2"
+      ],
+      "permissions": [
+        "admin_access",
+        "deploy_service",
+        "edit_employee",
+        "read_code",
+        "view_salary",
+        "write_code"
+      ],
+      "dominant_permissions": [
+        "deploy_service",
+        "read_code",
+        "write_code"
+      ],
+      "user_count": 2,
+      "cohesion_score": 0.9974344199130156
+    },
+    {
+      "cluster_id": "cluster_2",
+      "cluster_name": "Cluster (1 users)",
+      "users": [
+        "U3"
+      ],
+      "permissions": [
+        "admin_access",
+        "deploy_service",
+        "edit_employee",
+        "read_code",
+        "view_salary",
+        "write_code"
+      ],
+      "dominant_permissions": [
+        "admin_access",
+        "view_salary"
+      ],
+      "user_count": 1,
+      "cohesion_score": 1.0
+    },
+    {
+      "cluster_id": "cluster_3",
+      "cluster_name": "Cluster (1 users)",
+      "users": [
+        "U4"
+      ],
+      "permissions": [
+        "admin_access",
+        "deploy_service",
+        "edit_employee",
+        "read_code",
+        "view_salary",
+        "write_code"
+      ],
+      "dominant_permissions": [
+        "edit_employee",
+        "view_salary"
+      ],
+      "user_count": 1,
+      "cohesion_score": 1.0
+    }
+  ],
+  "roles": [
+    {
+      "role_id": "role_1",
+      "role_name": "Role_cluster_1",
+      "source_cluster": "cluster_1",
+      "permissions": [
+        "read_code",
+        "write_code"
+      ],
+      "coverage": "33.3%",
+      "user_count": 2,
+      "users": [
+        "U1",
+        "U2"
+      ],
+      "dominance_threshold": "70%",
+      "notes": "Minimal role extracted from 2 user cluster"
+    },
+    {
+      "role_id": "role_2",
+      "role_name": "Role_cluster_2",
+      "source_cluster": "cluster_2",
+      "permissions": [
+        "admin_access",
+        "view_salary"
+      ],
+      "coverage": "33.3%",
+      "user_count": 1,
+      "users": [
+        "U3"
+      ],
+      "dominance_threshold": "70%",
+      "notes": "Minimal role extracted from 1 user cluster"
+    },
+    {
+      "role_id": "role_3",
+      "role_name": "Role_cluster_3",
+      "source_cluster": "cluster_3",
+      "permissions": [
+        "edit_employee",
+        "view_salary"
+      ],
+      "coverage": "33.3%",
+      "user_count": 1,
+      "users": [
+        "U4"
+      ],
+      "dominance_threshold": "70%",
+      "notes": "Minimal role extracted from 1 user cluster"
+    }
+  ],
+  "risk_scores": [
+    {
+      "user_id": "U1",
+      "permission_id": "deploy_service",
+      "risk_score": 0.603,
+      "risk_level": "MEDIUM-HIGH",
+      "components": {
+        "sensitivity": 0.3,
+        "infrequency": 0.991,
+        "peer_deviation": 1.0,
+        "recency": 0.117
+      },
+      "adapted_weights": {
+        "sensitivity": 0.465,
+        "infrequency": 0.302,
+        "peer_deviation": 0.155,
+        "recency": 0.078
+      },
+      "flag": "REVIEW_NEEDED"
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "admin_access",
+      "risk_score": 0.566,
+      "risk_level": "MEDIUM",
+      "components": {
+        "sensitivity": 0.4,
+        "infrequency": 0.999,
+        "peer_deviation": 0,
+        "recency": 1.0
+      },
+      "adapted_weights": {
+        "sensitivity": 0.465,
+        "infrequency": 0.302,
+        "peer_deviation": 0.155,
+        "recency": 0.078
+      },
+      "flag": "REVIEW_NEEDED"
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "view_salary",
+      "risk_score": 0.438,
+      "risk_level": "MEDIUM",
+      "components": {
+        "sensitivity": 0.3,
+        "infrequency": 0.988,
+        "peer_deviation": 0,
+        "recency": 0
+      },
+      "adapted_weights": {
+        "sensitivity": 0.465,
+        "infrequency": 0.302,
+        "peer_deviation": 0.155,
+        "recency": 0.078
+      },
+      "flag": "MONITOR_90_DAYS"
+    },
+    {
+      "user_id": "U3",
+      "permission_id": "view_salary",
+      "risk_score": 0.432,
+      "risk_level": "MEDIUM",
+      "components": {
+        "sensitivity": 0.3,
+        "infrequency": 0.967,
+        "peer_deviation": 0,
+        "recency": 0
+      },
+      "adapted_weights": {
+        "sensitivity": 0.465,
+        "infrequency": 0.302,
+        "peer_deviation": 0.155,
+        "recency": 0.078
+      },
+      "flag": "MONITOR_90_DAYS"
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "write_code",
+      "risk_score": 0.427,
+      "risk_level": "MEDIUM",
+      "components": {
+        "sensitivity": 0.2,
+        "infrequency": 0.987,
+        "peer_deviation": 0.0,
+        "recency": 0
+      },
+      "adapted_weights": {
+        "sensitivity": 0.367,
+        "infrequency": 0.358,
+        "peer_deviation": 0.183,
+        "recency": 0.092
+      },
+      "flag": "MONITOR_90_DAYS"
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "write_code",
+      "risk_score": 0.427,
+      "risk_level": "MEDIUM",
+      "components": {
+        "sensitivity": 0.2,
+        "infrequency": 0.987,
+        "peer_deviation": 0.0,
+        "recency": 0
+      },
+      "adapted_weights": {
+        "sensitivity": 0.367,
+        "infrequency": 0.358,
+        "peer_deviation": 0.183,
+        "recency": 0.092
+      },
+      "flag": "MONITOR_90_DAYS"
+    },
+    {
+      "user_id": "U4",
+      "permission_id": "edit_employee",
+      "risk_score": 0.425,
+      "risk_level": "MEDIUM",
+      "components": {
+        "sensitivity": 0.2,
+        "infrequency": 0.982,
+        "peer_deviation": 0,
+        "recency": 0
+      },
+      "adapted_weights": {
+        "sensitivity": 0.367,
+        "infrequency": 0.358,
+        "peer_deviation": 0.183,
+        "recency": 0.092
+      },
+      "flag": "MONITOR_90_DAYS"
+    },
+    {
+      "user_id": "U1",
+      "permission_id": "read_code",
+      "risk_score": 0.39,
+      "risk_level": "LOW-MEDIUM",
+      "components": {
+        "sensitivity": 0.1,
+        "infrequency": 0.987,
+        "peer_deviation": 0.0,
+        "recency": 0
+      },
+      "adapted_weights": {
+        "sensitivity": 0.367,
+        "infrequency": 0.358,
+        "peer_deviation": 0.183,
+        "recency": 0.092
+      }
+    },
+    {
+      "user_id": "U2",
+      "permission_id": "read_code",
+      "risk_score": 0.39,
+      "risk_level": "LOW-MEDIUM",
+      "components": {
+        "sensitivity": 0.1,
+        "infrequency": 0.986,
+        "peer_deviation": 0.0,
+        "recency": 0
+      },
+      "adapted_weights": {
+        "sensitivity": 0.367,
+        "infrequency": 0.358,
+        "peer_deviation": 0.183,
+        "recency": 0.092
+      }
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": 1,
+      "action_type": "REVIEW",
+      "user_id": "U1",
+      "permission_id": "deploy_service",
+      "risk_score": 0.603,
+      "urgency": "HIGH",
+      "reason": "High sensitivity, infrequent (5 uses) 37 days old. Peer deviation: 100.0%",
+      "impact": "Controls deploy_service capability; clarifies access authority",
+      "metrics": {
+        "sensitivity": 0.3,
+        "usage_frequency": "5 occurrences",
+        "recency_days": 37,
+        "peer_prevalence": "0/1",
+        "global_prevalence": "1/9 accesses"
+      },
+      "resolution_options": [
+        "Verify with U1's manager if deploy_service is needed",
+        "If yes: Implement approval workflow",
+        "If no: Remove permission"
+      ]
+    },
+    {
+      "priority": 2,
+      "action_type": "REVIEW",
+      "user_id": "U3",
+      "permission_id": "admin_access",
+      "risk_score": 0.566,
+      "urgency": "HIGH",
+      "reason": "Critical sensitivity, only 1 use 118 days old. Peer deviation: 0.0%",
+      "impact": "Controls admin_access capability; clarifies access authority",
+      "metrics": {
+        "sensitivity": 0.4,
+        "usage_frequency": "1 occurrences",
+        "recency_days": 118,
+        "peer_prevalence": "0/0",
+        "global_prevalence": "1/9 accesses"
+      },
+      "resolution_options": [
+        "Verify with U3's manager if admin_access is needed",
+        "If yes: Implement approval workflow",
+        "If no: Remove permission"
+      ]
+    },
+    {
+      "priority": 3,
+      "action_type": "MONITOR",
+      "user_id": "U4",
+      "permission_id": "view_salary",
+      "risk_score": 0.438,
+      "urgency": "MEDIUM",
+      "reason": "High sensitivity, infrequent (20 uses). Peer deviation: 0.0%",
+      "impact": "Maintains operational capability; prevents access creep",
+      "metrics": {
+        "sensitivity": 0.3,
+        "usage_frequency": "20 occurrences",
+        "recency_days": 29,
+        "peer_prevalence": "0/0",
+        "global_prevalence": "2/9 accesses"
+      },
+      "resolution_options": [
+        "Schedule 90-day review for U4's view_salary",
+        "If zero usage detected: Remove",
+        "Otherwise: Continue monitoring"
+      ]
+    },
+    {
+      "priority": 4,
+      "action_type": "MONITOR",
+      "user_id": "U3",
+      "permission_id": "view_salary",
+      "risk_score": 0.432,
+      "urgency": "MEDIUM",
+      "reason": "High sensitivity, infrequent (40 uses). Peer deviation: 0.0%",
+      "impact": "Maintains operational capability; prevents access creep",
+      "metrics": {
+        "sensitivity": 0.3,
+        "usage_frequency": "40 occurrences",
+        "recency_days": 28,
+        "peer_prevalence": "0/0",
+        "global_prevalence": "2/9 accesses"
+      },
+      "resolution_options": [
+        "Schedule 90-day review for U3's view_salary",
+        "If zero usage detected: Remove",
+        "Otherwise: Continue monitoring"
+      ]
+    },
+    {
+      "priority": 5,
+      "action_type": "MONITOR",
+      "user_id": "U1",
+      "permission_id": "write_code",
+      "risk_score": 0.427,
+      "urgency": "MEDIUM",
+      "reason": "Medium sensitivity, infrequent (30 uses). Peer deviation: 0.0%",
+      "impact": "Maintains operational capability; prevents access creep",
+      "metrics": {
+        "sensitivity": 0.2,
+        "usage_frequency": "30 occurrences",
+        "recency_days": 28,
+        "peer_prevalence": "1/1",
+        "global_prevalence": "2/9 accesses"
+      },
+      "resolution_options": [
+        "Schedule 90-day review for U1's write_code",
+        "If zero usage detected: Remove",
+        "Otherwise: Continue monitoring"
+      ]
+    },
+    {
+      "priority": 6,
+      "action_type": "MONITOR",
+      "user_id": "U2",
+      "permission_id": "write_code",
+      "risk_score": 0.427,
+      "urgency": "MEDIUM",
+      "reason": "Medium sensitivity, infrequent (25 uses). Peer deviation: 0.0%",
+      "impact": "Maintains operational capability; prevents access creep",
+      "metrics": {
+        "sensitivity": 0.2,
+        "usage_frequency": "25 occurrences",
+        "recency_days": 28,
+        "peer_prevalence": "1/1",
+        "global_prevalence": "2/9 accesses"
+      },
+      "resolution_options": [
+        "Schedule 90-day review for U2's write_code",
+        "If zero usage detected: Remove",
+        "Otherwise: Continue monitoring"
+      ]
+    },
+    {
+      "priority": 7,
+      "action_type": "MONITOR",
+      "user_id": "U4",
+      "permission_id": "edit_employee",
+      "risk_score": 0.425,
+      "urgency": "MEDIUM",
+      "reason": "Medium sensitivity, infrequent (35 uses). Peer deviation: 0.0%",
+      "impact": "Maintains operational capability; prevents access creep",
+      "metrics": {
+        "sensitivity": 0.2,
+        "usage_frequency": "35 occurrences",
+        "recency_days": 28,
+        "peer_prevalence": "0/0",
+        "global_prevalence": "1/9 accesses"
+      },
+      "resolution_options": [
+        "Schedule 90-day review for U4's edit_employee",
+        "If zero usage detected: Remove",
+        "Otherwise: Continue monitoring"
+      ]
+    }
+  ],
+  "explanations": {
+    "methodology": "Deterministic identity governance pipeline with behavioral clustering, risk scoring, and explainable recommendations",
+    "role_mining_strategy": "Extracted minimal permission sets where inclusion threshold is >70% cluster usage",
+    "risk_formula": "Risk = (Sensitivity \u00d7 0.4) + (Infrequency \u00d7 0.3) + (Peer_Deviation \u00d7 0.2) + (Recency_Gap \u00d7 0.1)",
+    "key_insights": [
+      "Identified 3 behavioral clusters with high internal cohesion",
+      "Mined 3 optimized roles from cluster patterns",
+      "Found 7 high-risk user-permission pairs",
+      "Generated 7 prioritized cleanup actions"
+    ]
+  },
+  "summary": {
+    "current_state": {
+      "total_users": 4,
+      "total_permissions_assigned": 9,
+      "critical_risk_permissions": 0,
+      "high_risk_permissions": 1
+    },
+    "post_recommendation": {
+      "total_permissions_assigned": 9,
+      "critical_risk_permissions": 0,
+      "high_risk_permissions": 2,
+      "permission_reduction_pct": "0.0%"
+    }
+  }
+}

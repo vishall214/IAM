@@ -64,8 +64,9 @@ class IdentityGovernanceAnalyzer:
         
         # STEP 2: Behavior Vector Creation
         logger.info("\n[STEP 2] BEHAVIOR VECTOR CREATION")
-        vectors = self.vector_creator.create_vectors(users, logs, permissions)
+        vectors, anomalies = self.vector_creator.create_vectors(users, logs, permissions)
         logger.info(f"✓ Created {len(vectors)} behavior vectors")
+        result["anomalies"] = anomalies
         
         # STEP 3: User Clustering
         logger.info("\n[STEP 3] USER CLUSTERING")
