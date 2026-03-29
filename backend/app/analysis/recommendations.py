@@ -51,14 +51,17 @@ class RecommendationEngine:
             
             # Build recommendation
             rec = {
+                "id": f"{user_id}_{perm_id}_{len(recommendations)}",
                 "priority": len(recommendations) + 1,
                 "action_type": action_type,
                 "user_id": user_id,
                 "permission_id": perm_id,
                 "risk_score": risk_score,
+                "confidence": min(99, int(risk_score * 100 + 5)),
                 "urgency": urgency,
                 "reason": self._build_reason(risk, user_id, perm_id, vectors, clusters, perm_map, logs),
                 "impact": self._describe_impact(action_type, perm_id, perm_map),
+                "status": "pending",
                 "metrics": self._extract_metrics(risk, user_id, perm_id, vectors, clusters, logs)
             }
             

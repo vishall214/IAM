@@ -87,13 +87,16 @@ export interface RecommendationMetrics {
 }
 
 export interface ApiRecommendation {
+  id: string
   priority: number
   action_type: string // REMOVE, REVIEW, MONITOR
   user_id: string
   permission_id: string
   risk_score: number
+  confidence: number
   reason: string
   impact: string
+  status: string
   metrics: RecommendationMetrics
   resolution_options: string[]
   urgency: string
@@ -145,4 +148,61 @@ export interface PipelineStep {
 
 export interface PipelineStepsResponse {
   steps: PipelineStep[]
+}
+
+// --- Action Response Types ---
+
+export interface ActionRequest {
+  user_id: string
+  permission_id: string
+  recommendation_id?: string
+}
+
+export interface RecommendationActionResponse {
+  id: string
+  recommendation_id: string
+  user_id: string
+  permission_id: string
+  action_type: string
+  status: string
+  executed_by: string
+  executed_at: string
+  result_message?: string
+  error_message?: string
+}
+
+export interface UpdatedRecommendationResponse {
+  id: string
+  user_id: string
+  permission_id: string
+  action_type: string
+  priority: number
+  risk_score: number
+  reason: string
+  impact?: string
+  status: string
+  updated_at: string
+}
+
+export interface ActionExecutionResponse {
+  success: boolean
+  message: string
+  recommendation: UpdatedRecommendationResponse
+  action: RecommendationActionResponse
+}
+
+export interface ActionHistoryResponse {
+  user_id: string
+  total_actions: number
+  actions: RecommendationActionResponse[]
+}
+
+export interface AuditTrailResponse {
+  total_actions: number
+  filters: {
+    status: string
+    action_type: string
+    limit: number
+  }
+  actions: RecommendationActionResponse[]
 }

@@ -59,16 +59,19 @@ def generate_recommendations(risk_scores: List[Dict],
         impact = get_impact(action_type, permission_id)
         
         recommendations.append({
+            "id": f"rec-{user_id}-{permission_id}-{priority}",
             "priority": priority,
             "action_type": action_type,
             "user_id": user_id,
             "permission_id": permission_id,
             "risk_score": round(risk_score, 3),
+            "confidence": min(99, int(risk_score * 100 + 5)),
             "reason": reason,
             "impact": impact,
             "metrics": metrics,
             "resolution_options": resolution,
-            "urgency": urgency
+            "urgency": urgency,
+            "status": "pending"
         })
         
         priority += 1

@@ -126,23 +126,34 @@ export function transformUsersFromAnalysis(result: AnalysisResult, userMetadata?
 export function transformRecommendationsFromAnalysis(result: AnalysisResult, users: User[]): Recommendation[] {
   const userLookup = new Map(users.map(u => [u.id, u]))
 
-  return result.recommendations.map((rec, i) => {
-    const user = userLookup.get(rec.user_id)
-    const displayName = user?.name || rec.user_id
-    const avatar = user?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${rec.user_id}`
+  return result.recommendations.map((rec, index) => {
+    // Handle both snake_case (from backend) and camelCase (transformed)
+    const user_id = rec.user_id || (rec as any).userId
+    const permission_id = rec.permission_id || (rec as any).permissionId
+    
+    if (!user_id) throw new Error(`Recommendation ${index}: missing user_id`)
+    if (!permission_id) throw new Error(`Recommendation ${index}: missing permission_id`)
+    if (!rec.id) throw new Error(`Recommendation ${index}: missing id`)
+    if (!rec.status) throw new Error(`Recommendation ${index}: missing status`)
+    
+    const user = userLookup.get(user_id)
+    const displayName = user?.name || user_id
+    const avatar = user?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user_id}`
     const normalizedScore = rec.risk_score <= 1 ? Math.round(rec.risk_score * 100) : Math.round(rec.risk_score)
 
     return {
-      id: `rec-${i + 1}`,
+      id: rec.id,
       actionType: rec.action_type as "REMOVE" | "REVIEW" | "MONITOR",
       user: { name: displayName, avatar },
-      permission: rec.permission_id,
+      permission: permission_id,
       riskScore: normalizedScore,
-      confidence: Math.min(99, normalizedScore + 5),
+      confidence: rec.confidence,
       reasons: [rec.reason, rec.impact].filter(Boolean),
-      userId: rec.user_id,
-      permissionId: rec.permission_id,
-      status: "pending",
+      userId: user_id,
+      user_id: user_id,
+      permissionId: permission_id,
+      permission_id: permission_id,
+      status: rec.status as any,
     }
   })
 }

@@ -2,7 +2,7 @@
 Database Models for AccessMind
 """
 
-from sqlalchemy import Column, String, Integer, Float, DateTime, Text, JSON
+from sqlalchemy import Column, String, Integer, Float, DateTime, Text, JSON, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 
@@ -73,3 +73,38 @@ class Recommendation(Base):
     permission_id = Column(String)
     risk_score = Column(Float)
     reason = Column(Text)
+    impact = Column(Text, nullable=True)
+    metrics = Column(JSON, nullable=True)
+    resolution_options = Column(JSON, nullable=True)
+    urgency = Column(String, nullable=True)
+    status = Column(String, default="pending")  # pending, reviewed, revoked, ignored
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+class RecommendationAction(Base):
+    """Store all actions executed on recommendations (audit trail)"""
+    __tablename__ = "recommendation_actions"
+    
+    id = Column(String, primary_key=True)
+    recommendation_id = Column(String, ForeignKey("recommendations.id"), nullable=False)
+    user_id = Column(String, nullable=False)
+    permission_id = Column(String, nullable=False)
+    action_type = Column(String, nullable=False)  # revoke, review, ignore
+    status = Column(String, default="completed")  # pending, completed, failed
+    executed_by = Column(String, default="system")  # User who executed or "system"
+    executed_at = Column(DateTime, default=datetime.utcnow)
+    result_message = Column(Text, nullable=True)
+    error_message = Column(Text, nullable=True)
+
+
+class UserPermissionAssignment(Base):
+    """Store current user-permission assignments (what can be revoked)"""
+    __tablename__ = "user_permission_assignments"
+    
+    id = Column(String, primary_key=True)
+    user_id = Column(String, nullable=False)
+    permission_id = Column(String, nullable=False)
+    assigned_at = Column(DateTime, default=datetime.utcnow)
+    revoked_at = Column(DateTime, nullable=True)
+    is_active = Column(String, default="true")  # true/false

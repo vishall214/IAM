@@ -36,6 +36,9 @@ export interface AccessEvent {
 export type ActionType = "REMOVE" | "REVIEW" | "MONITOR"
 export type RecommendationStatus = "pending" | "reviewed" | "revoked" | "ignored"
 
+// UI state machine for recommendation processing
+export type RecommendationState = "PENDING" | "EXECUTING" | "REVIEWED" | "REVOKED" | "IGNORED"
+
 export interface Recommendation {
   id: string
   actionType: ActionType
@@ -47,10 +50,14 @@ export interface Recommendation {
   riskScore: number
   confidence: number
   reasons: string[]
-  /** Unique identifier for the user (needed for backend action) */
+  /** Unique identifier for the user (needed for backend action) - REQUIRED */
   userId?: string
-  /** Unique identifier for the permission (needed for backend action) */
+  /** Backend format snake_case version */
+  user_id?: string
+  /** Unique identifier for the permission (needed for backend action) - REQUIRED */
   permissionId?: string
+  /** Backend format snake_case version */
+  permission_id?: string
   /** Current status of the recommendation */
   status: RecommendationStatus
   /** Timestamp of the last action */

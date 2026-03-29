@@ -8,7 +8,6 @@ import { SummaryCards } from "@/components/dashboard/summary-cards"
 import { RiskHeatmapTable } from "@/components/dashboard/risk-heatmap-table"
 import { UserDetailDrawer } from "@/components/dashboard/user-detail-drawer"
 import { RecommendationsPanel } from "@/components/dashboard/recommendations-panel"
-import { ImpactSimulation } from "@/components/dashboard/impact-simulation"
 import { User, Recommendation } from "@/lib/types"
 import { useAnalysis } from "@/lib/analysis-context"
 import { transformUsersFromAnalysis, transformRecommendationsFromAnalysis, transformSummaryFromAnalysis, generateSparklineData } from "@/lib/transform"
@@ -21,7 +20,6 @@ export default function DashboardPage() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [selectedRecommendations, setSelectedRecommendations] = useState<string[]>([])
-  const [showSimulation, setShowSimulation] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(true)
 
   // Transform API data to UI format
@@ -56,15 +54,14 @@ export default function DashboardPage() {
     )
   }
 
+  // Note: RecommendationsPanel now handles bulk execution directly with confirmation dialog
+  // onSimulate is kept for backward compatibility but not used in new flow
   const handleSimulate = () => {
-    if (selectedRecommendations.length > 0) {
-      setShowSimulation(true)
-    }
+    // Bulk action execution is now handled in RecommendationsPanel
   }
 
   const handleApplyFixes = () => {
     setSelectedRecommendations([])
-    setShowSimulation(false)
   }
 
   // Show prompt if no analysis data loaded
@@ -124,16 +121,6 @@ export default function DashboardPage() {
                 />
               </div>
             </div>
-            
-            {/* Impact Simulation */}
-            {showSimulation && summary && (
-              <ImpactSimulation 
-                summary={summary}
-                selectedCount={selectedRecommendations.length}
-                onApply={handleApplyFixes}
-                onClose={() => setShowSimulation(false)}
-              />
-            )}
           </div>
         </main>
       </div>

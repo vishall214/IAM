@@ -11,6 +11,7 @@ import traceback
 
 from models.schemas import AnalysisRequest, AnalysisResponse
 from analysis.engine import IAMAnalysisEngine
+from app.api.routes import actions
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -30,6 +31,9 @@ app.add_middleware(
 
 # Initialize analysis engine
 engine = IAMAnalysisEngine()
+
+# Include action routes
+app.include_router(actions.router)
 
 @app.get("/health")
 async def health_check():

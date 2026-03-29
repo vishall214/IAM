@@ -32,6 +32,50 @@ class AnalysisInput(BaseModel):
     access_logs: List[AccessLogInput]
 
 
+# Action Request/Response models
+class ActionRequest(BaseModel):
+    """Request to execute an action on a recommendation"""
+    user_id: str
+    permission_id: str
+    recommendation_id: Optional[str] = None
+
+
+class RecommendationActionResponse(BaseModel):
+    """Response describing an executed action"""
+    id: str
+    recommendation_id: str
+    user_id: str
+    permission_id: str
+    action_type: str
+    status: str
+    executed_by: str
+    executed_at: str
+    result_message: Optional[str] = None
+    error_message: Optional[str] = None
+
+
+class UpdatedRecommendationResponse(BaseModel):
+    """Updated recommendation after action execution"""
+    id: str
+    user_id: str
+    permission_id: str
+    action_type: str
+    priority: int
+    risk_score: float
+    reason: str
+    impact: Optional[str] = None
+    status: str
+    updated_at: str
+
+
+class ActionExecutionResponse(BaseModel):
+    """Complete response from executing an action"""
+    success: bool
+    message: str
+    recommendation: UpdatedRecommendationResponse
+    action: RecommendationActionResponse
+
+
 # Output models
 class ClusterResponse(BaseModel):
     cluster_id: str
@@ -60,14 +104,17 @@ class RiskScoreResponse(BaseModel):
 
 
 class RecommendationResponse(BaseModel):
+    id: str
     priority: int
     action_type: str
     user_id: str
     permission_id: str
     risk_score: float
+    confidence: float
     urgency: str
     reason: str
     impact: str
+    status: str
     metrics: Dict[str, Any]
 
 

@@ -1,5 +1,5 @@
 # IAM Project Startup Script
-# Usage: Run from project root:  .\start.ps1
+# Usage: Run from project root directory:  .\start.ps1
 
 Write-Host "`n=== IAM Project Startup ===" -ForegroundColor Cyan
 
@@ -23,9 +23,9 @@ Start-Sleep -Seconds 1
 
 # --- Start Backend ---
 Write-Host "[2/4] Starting Backend (http://localhost:8000)..." -ForegroundColor Green
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$PSScriptRoot\backend'; python -m uvicorn main:app --reload --port 8000" -PassThru
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "& '$PSScriptRoot\.venv\Scripts\Activate.ps1'; Set-Location '$PSScriptRoot\backend'; python main.py" -PassThru
 
-Start-Sleep -Seconds 2
+Start-Sleep -Seconds 3
 
 # --- Start Frontend ---
 Write-Host "[3/4] Starting Frontend (http://localhost:3001)..." -ForegroundColor Green
@@ -40,6 +40,8 @@ Write-Host @"
   Backend  -> http://localhost:8000  (API docs: http://localhost:8000/docs)
   Frontend -> http://localhost:3001
 
-  To stop: Close the two PowerShell windows that opened, or run .\stop.ps1
+  To stop: Run .\stop.ps1
+  
+  Or close the PowerShell windows manually (Ctrl+C in each window)
 
 "@ -ForegroundColor Cyan

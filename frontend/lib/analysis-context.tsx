@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useCallback } from "react"
 import { AnalysisResult, AnalysisRequest } from "./api-types"
 import { Recommendation } from "./types"
-import { analyzeData, uploadCSV, revokeAccess, reviewAccess } from "./api"
+import { analyzeData, uploadCSV, revokeAccess, reviewAccess, ignoreAccess } from "./api"
 
 interface AnalysisContextType {
   /** The full analysis result from the backend */
@@ -20,8 +20,8 @@ interface AnalysisContextType {
   runCSVAnalysis: (file: File) => Promise<void>
   /** Clear the current results */
   clearResults: () => void
-  /** Execute action on recommendation (revoke or review) */
-  executeAction: (recommendationId: string, action: "revoke" | "review") => Promise<void>
+  /** Execute action on recommendation (revoke, review, or ignore) */
+  executeAction: (recommendationId: string, action: "revoke" | "review" | "ignore") => Promise<void>
   /** Get action error if any */
   actionError: string | null
   /** Clear action error */
@@ -84,7 +84,7 @@ export function AnalysisProvider({ children }: { children: React.ReactNode }) {
     setError(null)
   }, [])
 
-  const executeAction = useCallback(async (recommendationId: string, action: "revoke" | "review") => {
+  const executeAction = useCallback(async (recommendationId: string, action: "revoke" | "review" | "ignore") => {
     setActionError(null)
     try {
       if (!data?.recommendations) {
@@ -97,34 +97,85 @@ export function AnalysisProvider({ children }: { children: React.ReactNode }) {
         throw new Error("Recommendation not found")
       }
 
-      // Extract user_id and permission_id
-      const userId = rec.userId || rec.user?.name?.split(" ")[0] || "unknown"
-      const permissionId = rec.permissionId || rec.permission?.toLowerCase().replace(/\s+/g, "_") || "unknown"
+      // Use backend IDs directly - they come in snake_case from the backend
+      const userId = rec.user_id || rec.userId
+      const permissionId = rec.permission_id || rec.permissionId
 
-      // Execute the action
+      if (!userId) {
+        throw new Error(`Recommendation ${recommendationId}: missing required user_id. Got: ${JSON.stringify(rec)}`)
+      }
+      if (!permissionId) {
+        throw new Error(`Recommendation ${recommendationId}: missing required permission_id. Got: ${JSON.stringify(rec)}`)
+      }
+
+      // Execute the action and get real response from backend
       let result
       if (action === "revoke") {
-        result = await revokeAccess(userId, permissionId)
+        result = await revokeAccess(userId, permissionId, recommendationId)
+      } else if (action === "review") {
+        result = await reviewAccess(userId, permissionId, recommendationId)
+      } else if (action === "ignore") {
+        result = await ignoreAccess(userId, permissionId, recommendationId)
       } else {
-        result = await reviewAccess(userId, permissionId)
+        throw new Error(`Unknown action type: ${action}`)
       }
 
-      if (!result.success) {
-        throw new Error(result.message || "Action failed")
-      }
-
-      // Update the recommendation status in state
-      const newData = { ...data }
-      const recIndex = newData.recommendations.findIndex(r => r.id === recommendationId)
+      // Update the recommendation status from the backend response (real data, not fabricated)
+      const recIndex = data.recommendations.findIndex(r => r.id === recommendationId)
       if (recIndex !== -1) {
-        const updatedRec = { ...newData.recommendations[recIndex] }
-        if (action === "revoke") {
-          updatedRec.status = "revoked"
-        } else {
-          updatedRec.status = "reviewed"
+        const updatedRec = { ...data.recommendations[recIndex] }
+        
+        // Update from backend response - this is the source of truth
+        updatedRec.status = result.recommendation.status as any
+        updatedRec.actionTimestamp = result.recommendation.updated_at
+        
+        // Create a NEW array to trigger React re-render
+        let newRecommendations = data.recommendations.map((rec, idx) => 
+          idx === recIndex ? updatedRec : rec
+        )
+        
+        // If action is "revoke", simulate the impact across the entire analysis
+        let newData: AnalysisResult = { ...data, recommendations: newRecommendations }
+        
+        if (action === "revoke" && data.risk_scores && data.summary) {
+          // Simulate removing this permission access from the user's risk profile
+          const updatedRiskScores = data.risk_scores.map(riskScore => {
+            if (riskScore.user_id === userId && riskScore.permission_id === permissionId) {
+              // Significantly reduce risk for this user-permission pair
+              return {
+                ...riskScore,
+                risk_score: 0,
+                risk_level: "low",
+                flag: null
+              }
+            }
+            return riskScore
+          })
+          
+          // Recalculate summary based on risk score changes
+          const criticalCount = updatedRiskScores.filter(r => r.risk_level === "critical").length
+          const highCount = updatedRiskScores.filter(r => r.risk_level === "high").length
+          const mediumCount = updatedRiskScores.filter(r => r.risk_level === "medium").length
+          
+          newData = {
+            ...newData,
+            risk_scores: updatedRiskScores,
+            summary: {
+              ...data.summary,
+              post_recommendation: {
+                total_permissions_assigned: data.summary.post_recommendation.total_permissions_assigned - 1,
+                critical_risk_permissions: criticalCount,
+                high_risk_permissions: highCount,
+                medium_risk_permissions: mediumCount
+              }
+            }
+          }
+          
+          // Remove this recommendation from the list (it's been resolved)
+          newRecommendations = newRecommendations.filter(r => r.id !== recommendationId)
+          newData.recommendations = newRecommendations
         }
-        updatedRec.actionTimestamp = new Date().toISOString()
-        newData.recommendations[recIndex] = updatedRec
+        
         setData(newData)
       }
     } catch (err) {

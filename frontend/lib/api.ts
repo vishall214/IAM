@@ -2,7 +2,15 @@
  * Centralized API client for the FastAPI backend
  */
 
-import { AnalysisRequest, AnalysisResult, PipelineStepsResponse } from './api-types'
+import {
+  AnalysisRequest,
+  AnalysisResult,
+  PipelineStepsResponse,
+  ActionRequest,
+  ActionExecutionResponse,
+  ActionHistoryResponse,
+  AuditTrailResponse,
+} from './api-types'
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
@@ -70,48 +78,128 @@ export async function healthCheck(): Promise<{ status: string; version: string }
 
 /**
  * POST /api/actions/revoke — Revoke access for a user to a permission
- * Tries real backend first, falls back to simulated success
+ * 
+ * Removes a permission from a user's access.
+ * 
+ * @param userId - User ID to revoke access from
+ * @param permissionId - Permission ID to revoke
+ * @param recommendationId - Optional recommendation ID for tracking
+ * @throws ApiError if the operation fails
  */
-export async function revokeAccess(userId: string, permissionId: string): Promise<{ success: boolean; message: string }> {
-  try {
-    const response = await fetch(`${API_BASE}/api/actions/revoke`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user_id: userId, permission_id: permissionId }),
-    })
-    if (response.ok) {
-      return response.json()
-    }
-    // Fallback to simulated success
-    console.warn('Revoke endpoint not available, simulating success')
-    return { success: true, message: 'Access revoked (simulated)' }
-  } catch (err) {
-    // Network error, simulate success
-    console.warn('Revoke action failed, simulating success:', err)
-    return { success: true, message: 'Access revoked (local)' }
+export async function revokeAccess(
+  userId: string,
+  permissionId: string,
+  recommendationId?: string
+): Promise<ActionExecutionResponse> {
+  const request: ActionRequest = {
+    user_id: userId,
+    permission_id: permissionId,
+    recommendation_id: recommendationId,
   }
+
+  const response = await fetch(`${API_BASE}/api/actions/revoke`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(request),
+  })
+
+  return handleResponse<ActionExecutionResponse>(response)
 }
 
 /**
  * POST /api/actions/review — Mark access as under review
- * Tries real backend first, falls back to simulated success
+ * 
+ * Marks a user-permission pair as needing review without revoking access.
+ * 
+ * @param userId - User ID to review
+ * @param permissionId - Permission ID to review
+ * @param recommendationId - Optional recommendation ID for tracking
+ * @throws ApiError if the operation fails
  */
-export async function reviewAccess(userId: string, permissionId: string): Promise<{ success: boolean; message: string }> {
-  try {
-    const response = await fetch(`${API_BASE}/api/actions/review`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user_id: userId, permission_id: permissionId }),
-    })
-    if (response.ok) {
-      return response.json()
-    }
-    // Fallback to simulated success
-    console.warn('Review endpoint not available, simulating success')
-    return { success: true, message: 'Marked for review (simulated)' }
-  } catch (err) {
-    // Network error, simulate success
-    console.warn('Review action failed, simulating success:', err)
-    return { success: true, message: 'Marked for review (local)' }
+export async function reviewAccess(
+  userId: string,
+  permissionId: string,
+  recommendationId?: string
+): Promise<ActionExecutionResponse> {
+  const request: ActionRequest = {
+    user_id: userId,
+    permission_id: permissionId,
+    recommendation_id: recommendationId,
   }
+
+  const response = await fetch(`${API_BASE}/api/actions/review`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(request),
+  })
+
+  return handleResponse<ActionExecutionResponse>(response)
+}
+
+/**
+ * POST /api/actions/ignore — Ignore a recommendation
+ * 
+ * Dismisses a recommendation without taking action or revoking access.
+ * 
+ * @param userId - User ID for the recommendation
+ * @param permissionId - Permission ID for the recommendation
+ * @param recommendationId - Optional recommendation ID for tracking
+ * @throws ApiError if the operation fails
+ */
+export async function ignoreAccess(
+  userId: string,
+  permissionId: string,
+  recommendationId?: string
+): Promise<ActionExecutionResponse> {
+  const request: ActionRequest = {
+    user_id: userId,
+    permission_id: permissionId,
+    recommendation_id: recommendationId,
+  }
+
+  const response = await fetch(`${API_BASE}/api/actions/ignore`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(request),
+  })
+
+  return handleResponse<ActionExecutionResponse>(response)
+}
+
+/**
+ * GET /api/actions/history/{userId} — Get action history for a user
+ * 
+ * Retrieves all actions (revoke, review, ignore) executed on a user's permissions.
+ * 
+ * @param userId - User ID to retrieve history for
+ * @throws ApiError if the operation fails
+ */
+export async function getActionHistory(userId: string): Promise<ActionHistoryResponse> {
+  const response = await fetch(`${API_BASE}/api/actions/history/${userId}`)
+  return handleResponse<ActionHistoryResponse>(response)
+}
+
+/**
+ * GET /api/actions/audit-trail — Get complete audit trail
+ * 
+ * Retrieves all executed actions across the system.
+ * 
+ * @param status - Filter by status: "all", "completed", "failed"
+ * @param actionType - Filter by action type: "all", "revoke", "review", "ignore"
+ * @param limit - Maximum records to return (default: 100)
+ * @throws ApiError if the operation fails
+ */
+export async function getAuditTrail(
+  status: string = 'all',
+  actionType: string = 'all',
+  limit: number = 100
+): Promise<AuditTrailResponse> {
+  const params = new URLSearchParams({
+    status,
+    action_type: actionType,
+    limit: limit.toString(),
+  })
+
+  const response = await fetch(`${API_BASE}/api/actions/audit-trail?${params}`)
+  return handleResponse<AuditTrailResponse>(response)
 }
