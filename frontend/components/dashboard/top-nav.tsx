@@ -1,0 +1,78 @@
+"use client"
+
+import { Bell, Search, Menu } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+
+interface TopNavProps {
+  onMenuClick: () => void
+}
+
+export function TopNav({ onMenuClick }: TopNavProps) {
+  return (
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-sm">
+      <div className="flex h-14 items-center justify-between px-4">
+        {/* Left section */}
+        <div className="flex items-center gap-3">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={onMenuClick}
+            className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-muted"
+          >
+            <Menu className="h-4 w-4" />
+          </Button>
+          
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-md bg-primary flex items-center justify-center">
+              <span className="text-[10px] font-bold text-white">AM</span>
+            </div>
+            <span className="text-sm font-semibold tracking-tight text-foreground">
+              AccessMind
+            </span>
+          </div>
+        </div>
+
+        {/* Center - Search */}
+        <div className="hidden md:flex flex-1 max-w-sm mx-6">
+          <div className="relative w-full">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Search users, permissions..."
+              className="w-full h-9 pl-9 pr-4 rounded-lg bg-muted border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all"
+            />
+            <kbd className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none hidden sm:inline-flex h-5 select-none items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
+              <span className="text-xs">⌘</span>K
+            </kbd>
+          </div>
+        </div>
+
+        {/* Right section */}
+        <div className="flex items-center gap-2">
+          <Button 
+            variant="ghost" 
+            size="icon"
+            className="relative h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-muted"
+          >
+            <Bell className="h-4 w-4" />
+            <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red-500 rounded-full" />
+          </Button>
+          
+          <div className="h-6 w-px bg-border" />
+          
+          <div className="flex items-center gap-2">
+            <div className="hidden sm:block text-right">
+              <p className="text-sm font-medium text-foreground">Alex Morgan</p>
+              <p className="text-[11px] text-muted-foreground">Security Admin</p>
+            </div>
+            <Avatar className="h-8 w-8">
+              <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex" />
+              <AvatarFallback className="bg-muted text-muted-foreground text-xs">AM</AvatarFallback>
+            </Avatar>
+          </div>
+        </div>
+      </div>
+    </header>
+  )
+}
