@@ -26,8 +26,8 @@ const navItems = [
   { icon: Users, label: "Clusters", href: "/clusters" },
   { icon: Shield, label: "Roles", href: "/roles" },
   { icon: Lightbulb, label: "Recommendations", href: "/recommendations" },
-  { icon: Activity, label: "Activity Log", href: "#" },
-  { icon: FileBarChart, label: "Reports", href: "#" },
+  //{ icon: Activity, label: "Activity Log", href: "#" },
+  //{ icon: FileBarChart, label: "Reports", href: "#" },
   // { icon: Settings, label: "Settings", href: "#" },
 ]
 

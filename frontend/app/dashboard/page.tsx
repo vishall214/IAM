@@ -129,18 +129,6 @@ export default function DashboardPage() {
                 />
               </div>
             </div>
-<<<<<<< HEAD
-=======
-            {/* Impact Simulation */}
-            {showSimulation && summary && (
-              <ImpactSimulation 
-                summary={summary}
-                selectedCount={selectedRecommendations.length}
-                onApply={handleApplyFixes}
-                onClose={() => setShowSimulation(false)}
-              />
-            )}
->>>>>>> e59a3fd1fe0f22a6e268e3092a3957e24315fd61
           </div>
         </main>
       </div>
