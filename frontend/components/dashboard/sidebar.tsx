@@ -42,44 +42,8 @@ export function Sidebar({ isOpen }: SidebarProps) {
       )}
     >
       <div className="flex flex-col h-full p-3">
-        <nav className="flex-1 space-y-0.5">
-          {navItems.map((item) => {
-            const isActive = item.href !== "#" && pathname === item.href
-            const isDisabled = item.href === "#"
-            
-            if (isDisabled) {
-              return (
-                <button
-                  key={item.label}
-                  disabled
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-muted-foreground/50 cursor-not-allowed"
-                >
-                  <item.icon className="h-4 w-4" />
-                  <span>{item.label}</span>
-                </button>
-              )
-            }
-            
-            return (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={cn(
-                  "w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors duration-150",
-                  isActive 
-                    ? "bg-primary/10 text-primary font-medium" 
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                )}
-              >
-                <item.icon className="h-4 w-4" />
-                <span>{item.label}</span>
-              </Link>
-            )
-          })}
-        </nav>
-
-        {/* Bottom section - Security Score */}
-        <div className="mt-auto pt-3 border-t border-border">
+        {/* Top section - Security Score */}
+        <div className="mb-4">
           <div className="glass-card rounded-lg p-3">
             <div className="flex items-center gap-2 mb-2">
               <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center">
@@ -102,7 +66,40 @@ export function Sidebar({ isOpen }: SidebarProps) {
             </div>
           </div>
         </div>
+        <nav className="flex-1 space-y-0.5">
+          {navItems.map((item) => {
+            const isActive = item.href !== "#" && pathname === item.href
+            const isDisabled = item.href === "#"
+            if (isDisabled) {
+              return (
+                <button
+                  key={item.label}
+                  disabled
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-muted-foreground/50 cursor-not-allowed"
+                >
+                  <item.icon className="h-4 w-4" />
+                  <span>{item.label}</span>
+                </button>
+              )
+            }
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={cn(
+                  "w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors duration-150",
+                  isActive 
+                    ? "bg-primary/10 text-primary font-medium" 
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                )}
+              >
+                <item.icon className="h-4 w-4" />
+                <span>{item.label}</span>
+              </Link>
+            )
+          })}
+        </nav>
       </div>
     </aside>
-  )
+  )  
 }

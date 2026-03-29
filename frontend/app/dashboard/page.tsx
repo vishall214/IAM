@@ -23,18 +23,17 @@ export default function DashboardPage() {
   const [selectedRecommendations, setSelectedRecommendations] = useState<string[]>([])
   const [showSimulation, setShowSimulation] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [searchQuery, setSearchQuery] = useState("")
 
   // Transform API data to UI format
   const { users, recommendations, summary, sparklineData } = useMemo(() => {
     if (!analysisData) {
       return { users: [], recommendations: [], summary: null, sparklineData: null }
     }
-    
     const transformedUsers = transformUsersFromAnalysis(analysisData, userMetadata)
     const transformedRecommendations = transformRecommendationsFromAnalysis(analysisData, transformedUsers)
     const transformedSummary = transformSummaryFromAnalysis(transformedUsers, analysisData)
     const transformedSparklineData = generateSparklineData(transformedUsers)
-    
     return {
       users: transformedUsers,
       recommendations: transformedRecommendations,
@@ -42,6 +41,18 @@ export default function DashboardPage() {
       sparklineData: transformedSparklineData
     }
   }, [analysisData, userMetadata])
+
+  // Filter users by search query
+  const filteredUsers = useMemo(() => {
+    if (!searchQuery) return users
+    const queryWords = searchQuery.toLowerCase().split(/\s+/).filter(Boolean)
+    return users.filter(user => {
+      const name = user.name.toLowerCase()
+      const email = user.email.toLowerCase()
+      // All words in query must be present in name or email
+      return queryWords.every(word => name.includes(word) || email.includes(word))
+    })
+  }, [users, searchQuery])
 
   const handleUserClick = (user: User) => {
     setSelectedUser(user)
@@ -96,24 +107,30 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-background">
       <TopNav onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
-      
       <div className="flex">
         <Sidebar isOpen={sidebarOpen} />
-        
         <main className={`flex-1 transition-all duration-200 ${sidebarOpen ? 'ml-56' : 'ml-0'}`}>
           <div className="p-5 space-y-5">
+            {/* Search Bar */}
+            <div className="flex justify-end mb-2">
+              <input
+                type="text"
+                placeholder="Search users..."
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                className="h-9 pl-4 pr-4 rounded-lg bg-muted/50 border border-border/50 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all w-[250px]"
+              />
+            </div>
             {/* Summary Cards */}
             {summary && sparklineData && (
               <SummaryCards summary={summary} sparklineData={sparklineData} />
             )}
-            
             {/* Main Grid */}
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
               {/* Risk Heatmap Table - 2 cols */}
               <div className="xl:col-span-2">
-                <RiskHeatmapTable users={users} onUserClick={handleUserClick} />
+                <RiskHeatmapTable users={filteredUsers} onUserClick={handleUserClick} />
               </div>
-              
               {/* Recommendations Panel - 1 col */}
               <div className="xl:col-span-1">
                 <RecommendationsPanel 
@@ -124,7 +141,6 @@ export default function DashboardPage() {
                 />
               </div>
             </div>
-            
             {/* Impact Simulation */}
             {showSimulation && summary && (
               <ImpactSimulation 
@@ -137,7 +153,6 @@ export default function DashboardPage() {
           </div>
         </main>
       </div>
-
       {/* User Detail Drawer */}
       <UserDetailDrawer 
         user={selectedUser}
