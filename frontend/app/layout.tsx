@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'AccessMind | AI-Powered Identity Governance',
+  title: 'AccessMind',
   description: 'Enterprise security analytics and identity governance platform powered by AI',
   icons: {
     icon: [
