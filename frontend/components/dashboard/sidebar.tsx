@@ -21,7 +21,7 @@ interface SidebarProps {
 
 const navItems = [
   { icon: Upload, label: "Upload Data", href: "/" },
-  { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
+  // { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
   { icon: AlertTriangle, label: "Risk Analysis", href: "/dashboard" },
   { icon: Users, label: "Clusters", href: "/clusters" },
   { icon: Shield, label: "Roles", href: "/roles" },
