@@ -63,12 +63,12 @@ export function TopNav({ onMenuClick }: TopNavProps) {
           
           <div className="flex items-center gap-2">
             <div className="hidden sm:block text-right">
-              <p className="text-sm font-medium text-foreground">Alex Morgan</p>
+              <p className="text-sm font-medium text-foreground">admin</p>
               <p className="text-[11px] text-muted-foreground">Security Admin</p>
             </div>
             <Avatar className="h-8 w-8">
-              <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex" />
-              <AvatarFallback className="bg-muted text-muted-foreground text-xs">AM</AvatarFallback>
+              <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=admin" />
+              <AvatarFallback className="bg-muted text-muted-foreground text-xs">AD</AvatarFallback>
             </Avatar>
           </div>
         </div>
