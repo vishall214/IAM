@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button"
 
 export default function DashboardPage() {
   const router = useRouter()
-  const { data: analysisData } = useAnalysis()
+  const { data: analysisData, userMetadata } = useAnalysis()
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [selectedRecommendations, setSelectedRecommendations] = useState<string[]>([])
@@ -30,7 +30,7 @@ export default function DashboardPage() {
       return { users: [], recommendations: [], summary: null, sparklineData: null }
     }
     
-    const transformedUsers = transformUsersFromAnalysis(analysisData)
+    const transformedUsers = transformUsersFromAnalysis(analysisData, userMetadata)
     const transformedRecommendations = transformRecommendationsFromAnalysis(analysisData, transformedUsers)
     const transformedSummary = transformSummaryFromAnalysis(transformedUsers, analysisData)
     const transformedSparklineData = generateSparklineData(transformedUsers)
@@ -41,7 +41,7 @@ export default function DashboardPage() {
       summary: transformedSummary,
       sparklineData: transformedSparklineData
     }
-  }, [analysisData])
+  }, [analysisData, userMetadata])
 
   const handleUserClick = (user: User) => {
     setSelectedUser(user)

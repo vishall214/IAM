@@ -50,7 +50,7 @@ function generateAccessHistory(seed: number): AccessEvent[] {
   }))
 }
 
-export function transformUsersFromAnalysis(result: AnalysisResult): User[] {
+export function transformUsersFromAnalysis(result: AnalysisResult, userMetadata?: Map<string, { name: string; email: string }> | null): User[] {
   // Aggregate risk scores by user
   const userMap = new Map<string, AggregatedUser>()
 
@@ -93,13 +93,17 @@ export function transformUsersFromAnalysis(result: AnalysisResult): User[] {
   const users: User[] = Array.from(userMap.values()).map((agg, index) => {
     const avgRisk = Math.round(agg.riskScores.reduce((a, b) => a + b, 0) / agg.riskScores.length)
     const riskLevel = avgRisk >= 70 ? "high" : avgRisk >= 40 ? "medium" : "low"
-    const displayName = agg.user_id.replace(/_/g, " ").replace(/^U(\d+)$/, "User $1")
+    
+    // Use metadata if available, otherwise generate placeholder
+    const metadata = userMetadata?.get(agg.user_id)
+    const displayName = metadata?.name || agg.user_id.replace(/_/g, " ").replace(/^U(\d+)$/, "User $1")
+    const displayEmail = metadata?.email || `${agg.user_id.toLowerCase()}@company.com`
 
     return {
       id: agg.user_id,
       name: displayName,
-      email: `${agg.user_id.toLowerCase()}@company.com`,
-      avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${agg.user_id}`,
+      email: displayEmail,
+      avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${displayName}`,
       department: agg.department,
       riskScore: avgRisk,
       riskLevel,

@@ -7,6 +7,8 @@
 
 export interface UserInput {
   user_id: string
+  name?: string  // Optional: For frontend display
+  email?: string // Optional: For frontend display
   department?: string
 }
 
